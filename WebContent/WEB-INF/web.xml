@@ -4,47 +4,33 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 
-	<display-name>Mirina</display-name>
-	<description>Mirina报表系统</description>
+	<display-name>Mirana</display-name>
+	<description>Mirana报表系统</description>
 	
-
-	<!-- Default locale setting.
-	-->
 	<context-param>
 		<param-name>BIRT_VIEWER_LOCALE</param-name>
 		<param-value>en-US</param-value>
 	</context-param>
 
-	<!--
-		Default timezone setting.
-		Examples: "Europe/Paris", "GMT+1".
-		Defaults to the container's timezone.
-	-->
+	<!-- 时区设置	-->
 	<context-param>
 		<param-name>BIRT_VIEWER_TIMEZONE</param-name>
 		<param-value></param-value>
 	</context-param>
 
-	<!--
-		Report resources directory for preview. Defaults to ${birt home}
-	-->
+	<!-- 报表引擎地址，可为空  -->
 	<context-param>
 		<param-name>BIRT_VIEWER_WORKING_FOLDER</param-name>
 		<param-value></param-value>
 	</context-param>
 
-	<!--
-		Temporary document files directory. Defaults to ${birt home}/documents
-	-->
+	<!-- 编译后document存放地址	-->
 	<context-param>
 		<param-name>BIRT_VIEWER_DOCUMENT_FOLDER</param-name>
 		<param-value>${birt.viewer.working.path}/documents</param-value>
 	</context-param>
 
-	<!--
-		Flag whether the report resources can only be accessed under the
-		working folder. Defaults to true
-	-->
+	<!-- 报表文件是否只读  -->
 	<context-param>
 		<param-name>WORKING_FOLDER_ACCESS_ONLY</param-name>
 		<param-value>true</param-value>
@@ -164,10 +150,12 @@
 		<filter-name>ViewerFilter</filter-name>
 		<filter-class>org.eclipse.birt.report.filter.ViewerFilter</filter-class>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>ViewerFilter</filter-name>
 		<servlet-name>ViewerServlet</servlet-name>
 	</filter-mapping>
+	
 	<filter-mapping>
 		<filter-name>ViewerFilter</filter-name>
 		<servlet-name>EngineServlet</servlet-name>
@@ -189,11 +177,7 @@
 		<servlet-class>org.eclipse.birt.report.servlet.ViewerServlet</servlet-class>
 	</servlet>
 
-	<!-- Engine Servlet -->
-	<servlet>
-		<servlet-name>EngineServlet</servlet-name>
-		<servlet-class>org.eclipse.birt.report.servlet.BirtEngineServlet</servlet-class>
-	</servlet>
+
 
 	<servlet-mapping>
 		<servlet-name>ViewerServlet</servlet-name>
@@ -204,6 +188,12 @@
 		<servlet-name>ViewerServlet</servlet-name>
 		<url-pattern>/run</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Engine Servlet -->
+	<servlet>
+		<servlet-name>EngineServlet</servlet-name>
+		<servlet-class>org.eclipse.birt.report.servlet.BirtEngineServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>EngineServlet</servlet-name>

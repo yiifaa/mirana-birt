@@ -1,18 +1,6 @@
-/*************************************************************************************
- * Copyright (c) 2004 Actuate Corporation and others.
- * All rights reserved. This program and the accompanying materials 
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *     Actuate Corporation - Initial implementation.
- ************************************************************************************/
-
 package org.eclipse.birt.report.servlet;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -25,7 +13,6 @@ import org.eclipse.birt.report.service.BirtReportServiceFactory;
 import org.eclipse.birt.report.service.BirtViewerReportService;
 import org.eclipse.birt.report.servlet.BirtSoapMessageDispatcherServlet;
 import org.eclipse.birt.report.utility.BirtUtility;
-import org.eclipse.birt.report.utility.ParameterAccessor;
 import org.eclipse.birt.report.context.BirtContext;
 import org.eclipse.birt.report.context.IContext;
 import org.eclipse.birt.report.presentation.aggregation.IFragment;
@@ -166,9 +153,8 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet
 	{
 		IFragment activeFragment = null;
 		String servletPath = context.getRequest( ).getServletPath( );
-		if ( IBirtConstants.SERVLET_PATH_FRAMESET
-				.equalsIgnoreCase( servletPath ) )
-		{
+		//	如果是
+		if (IBirtConstants.SERVLET_PATH_FRAMESET.equalsIgnoreCase(servletPath)) {
 			activeFragment = viewer;
 		}
 		else if ( IBirtConstants.SERVLET_PATH_RUN

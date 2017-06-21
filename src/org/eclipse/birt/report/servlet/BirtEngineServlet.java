@@ -33,9 +33,9 @@ public class BirtEngineServlet extends BaseReportEngineServlet
 {
 
 	/**
-	 * TODO: what's this?
+	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 880784300822854103L;
 
 	/**
 	 * Local initialization.
