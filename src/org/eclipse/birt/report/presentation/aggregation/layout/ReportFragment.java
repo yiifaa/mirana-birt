@@ -25,7 +25,7 @@ public class ReportFragment extends BirtBaseFragment
 	 */
 	protected void build( )
 	{
-		addChild( new SidebarFragment( ) );
-		addChild(  new ReportContentFragment( ) );
+		addChild(new SidebarFragment( ) );
+		addChild(new ReportContentFragment( ) );
 	}
 }

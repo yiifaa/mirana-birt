@@ -101,21 +101,20 @@ public class BirtBaseFragment extends AbstractBaseFragment
 	protected static IFragment parameterFragment = null;
 
 	/**
-	 * Base class implementation of post service process.
+	 * 获取需要渲染的布局视图
 	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected String doPostService( HttpServletRequest request,
-			HttpServletResponse response ) throws ServletException, IOException
+	protected String doPostService(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
-		response.setHeader("Cache-Control","no-store");  //$NON-NLS-1$//$NON-NLS-2$
-		response.setHeader("Pragma","no-cache");  //$NON-NLS-1$//$NON-NLS-2$
-		response.setDateHeader("Expires", 0);    //$NON-NLS-1$
+		response.setHeader("Cache-Control","no-store");
+		response.setHeader("Pragma","no-cache");
+		response.setDateHeader("Expires", 0);
 		String className = getClass( ).getName( ).substring( getClass( ).getName( ).lastIndexOf ( '.' ) + 1 );
-		return JSPRootPath + "/pages/layout/" + className + ".jsp"; //$NON-NLS-1$ //$NON-NLS-2$
+		return JSPRootPath + "/pages/layout/" + className + ".jsp"; 
 	}
 
 	/**

@@ -35,8 +35,7 @@ public class SidebarFragment extends BirtBaseFragment
 	 */
 	protected void build( )
 	{
-		addChild( new DialogContainerFragment(
-				new SimpleExportDataDialogFragment( ) ) );
+		addChild(new DialogContainerFragment(new SimpleExportDataDialogFragment( ) ) );
 		addChild( new DialogContainerFragment( new ExceptionDialogFragment( ) ) );
 		addChild( new DialogContainerFragment( new ParameterDialogFragment( ) ) );
 		addChild( new DialogContainerFragment( new ExportReportDialogFragment( ) ) );

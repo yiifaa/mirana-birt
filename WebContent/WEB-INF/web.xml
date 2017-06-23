@@ -9,7 +9,7 @@
 	
 	<context-param>
 		<param-name>BIRT_VIEWER_LOCALE</param-name>
-		<param-value>en-US</param-value>
+		<param-value>zh-CN</param-value>
 	</context-param>
 
 	<!-- 时区设置	-->

@@ -1,13 +1,3 @@
-/*************************************************************************************
- * Copyright (c) 2004 Actuate Corporation and others.
- * All rights reserved. This program and the accompanying materials 
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *     Actuate Corporation - Initial implementation.
- ************************************************************************************/
 
 package org.eclipse.birt.report.presentation.aggregation.layout;
 
@@ -45,20 +35,18 @@ import org.eclipse.birt.report.utility.ParameterAccessor;
 
 /**
  * Root fragment for web viewer composite.
- * <p>
+ * 这是预览视图的布局框架
  * 
  * @see BaseFragment
  */
-public class FramesetFragment extends BirtBaseFragment
-{
+public class FramesetFragment extends BirtBaseFragment {
 
 	/**
 	 * Override build method.
 	 */
-	protected void build( )
-	{
-		addChild( new ToolbarFragment( ) );
-		addChild( new ReportFragment( ) );
+	protected void build() {
+		addChild(new ToolbarFragment());
+		addChild(new ReportFragment());
 	}
 
 	/**
@@ -73,29 +61,21 @@ public class FramesetFragment extends BirtBaseFragment
 	 * @exception ServletException
 	 * @exception IOException
 	 */
-	public void service( HttpServletRequest request,
-			HttpServletResponse response ) throws ServletException,
-			IOException, BirtException
-	{
-		BaseAttributeBean attrBean = (BaseAttributeBean) request
-				.getAttribute( IBirtConstants.ATTRIBUTE_BEAN );
-		if ( attrBean != null && !attrBean.isShowParameterPage( )
-				&& !this.__checkHTMLFormat( request ) )
-		{
-			this.doPreService( request, response );
-			this.doService( request, response );
-			this.doPostService( request, response );
-		}
-		else
-		{
-			super.doPreService( request, response );
-			super.doService( request, response );
-			String target = super.doPostService( request, response );
-
-			if ( target != null && target.length( ) > 0 )
-			{
-				RequestDispatcher rd = request.getRequestDispatcher( target );
-				rd.include( request, response );
+	public void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, BirtException {
+		BaseAttributeBean attrBean = (BaseAttributeBean) request.getAttribute(IBirtConstants.ATTRIBUTE_BEAN);
+		if (attrBean != null && !attrBean.isShowParameterPage() && !this.__checkHTMLFormat(request)) {
+			this.doPreService(request, response);
+			this.doService(request, response);
+			this.doPostService(request, response);
+		} else {
+			super.doPreService(request, response);
+			super.doService(request, response);
+			String target = super.doPostService(request, response);
+			//	返回/webcontent/birt/pages/layout/FramesetFragment.jsp
+			if (target != null && target.length() > 0) {
+				RequestDispatcher rd = request.getRequestDispatcher(target);
+				rd.include(request, response);
 			}
 		}
 	}
@@ -106,14 +86,11 @@ public class FramesetFragment extends BirtBaseFragment
 	 * @param request
 	 * @return
 	 */
-	protected boolean __checkHTMLFormat( HttpServletRequest request )
-	{
-		BaseAttributeBean bean = (BaseAttributeBean) request
-				.getAttribute( IBirtConstants.ATTRIBUTE_BEAN );
+	protected boolean __checkHTMLFormat(HttpServletRequest request) {
+		BaseAttributeBean bean = (BaseAttributeBean) request.getAttribute(IBirtConstants.ATTRIBUTE_BEAN);
 		assert bean != null;
 
-		return ParameterAccessor.PARAM_FORMAT_HTML.equalsIgnoreCase( bean
-				.getFormat( ) );
+		return ParameterAccessor.PARAM_FORMAT_HTML.equalsIgnoreCase(bean.getFormat());
 	}
 
 	/**
@@ -126,37 +103,29 @@ public class FramesetFragment extends BirtBaseFragment
 	 * @exception ServletException
 	 * @exception IOException
 	 */
-	protected void doPreService( HttpServletRequest request,
-			HttpServletResponse response ) throws ServletException, IOException
-	{
-		BaseAttributeBean attrBean = (BaseAttributeBean) request
-				.getAttribute( IBirtConstants.ATTRIBUTE_BEAN );
-		String format = attrBean.getFormat( );
-		String emitterId = attrBean.getEmitterId( );
-		String openType = ParameterAccessor.getOpenType( request );
-		if ( ParameterAccessor.PARAM_FORMAT_PDF.equalsIgnoreCase( format ) )
-		{
-			response.setContentType( "application/pdf" ); //$NON-NLS-1$
-		}
-		else
-		{
-			String mimeType = ParameterAccessor.getEmitterMimeType( emitterId );
-			if ( mimeType == null )
-			{
-				mimeType = ReportEngineService.getInstance( ).getMIMEType( format );
+	protected void doPreService(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		BaseAttributeBean attrBean = (BaseAttributeBean) request.getAttribute(IBirtConstants.ATTRIBUTE_BEAN);
+		String format = attrBean.getFormat();
+		String emitterId = attrBean.getEmitterId();
+		String openType = ParameterAccessor.getOpenType(request);
+		if (ParameterAccessor.PARAM_FORMAT_PDF.equalsIgnoreCase(format)) {
+			response.setContentType("application/pdf"); //$NON-NLS-1$
+		} else {
+			String mimeType = ParameterAccessor.getEmitterMimeType(emitterId);
+			if (mimeType == null) {
+				mimeType = ReportEngineService.getInstance().getMIMEType(format);
 			}
-			if ( mimeType != null && mimeType.length( ) > 0 )
-				response.setContentType( mimeType );
+			if (mimeType != null && mimeType.length() > 0)
+				response.setContentType(mimeType);
 			else
-				response.setContentType( "application/octet-stream" ); //$NON-NLS-1$
+				response.setContentType("application/octet-stream"); //$NON-NLS-1$
 		}
-		
-		String filename = ParameterAccessor.getExportFilename( new BirtContext( request, response ), format, emitterId );
-		response.setHeader( "Content-Disposition", //$NON-NLS-1$
-				ParameterAccessor.htmlHeaderValueEncode( openType )
-						+ "; filename=\"" //$NON-NLS-1$
-						+ ParameterAccessor.htmlHeaderValueEncode( filename )
-						+ "\"" ); //$NON-NLS-1$
+
+		String filename = ParameterAccessor.getExportFilename(new BirtContext(request, response), format, emitterId);
+		response.setHeader("Content-Disposition", //$NON-NLS-1$
+				ParameterAccessor.htmlHeaderValueEncode(openType) + "; filename=\"" //$NON-NLS-1$
+						+ ParameterAccessor.htmlHeaderValueEncode(filename) + "\""); //$NON-NLS-1$
 	}
 
 	/**
@@ -169,72 +138,55 @@ public class FramesetFragment extends BirtBaseFragment
 	 * @exception ServletException
 	 * @exception IOException
 	 */
-	protected void doService( HttpServletRequest request,
-			HttpServletResponse response ) throws ServletException,
-			IOException, BirtException
-	{
-		BaseAttributeBean attrBean = (BaseAttributeBean) request
-				.getAttribute( IBirtConstants.ATTRIBUTE_BEAN );
+	protected void doService(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, BirtException {
+		BaseAttributeBean attrBean = (BaseAttributeBean) request.getAttribute(IBirtConstants.ATTRIBUTE_BEAN);
 		assert attrBean != null;
 
-		OutputStream out = response.getOutputStream( );
-		IContext context = new BirtContext( request, response );
-		GetUpdatedObjectsResponse upResponse = new GetUpdatedObjectsResponse( );
+		OutputStream out = response.getOutputStream();
+		IContext context = new BirtContext(request, response);
+		GetUpdatedObjectsResponse upResponse = new GetUpdatedObjectsResponse();
 		Operation op = null;
-		try
-		{
-			File file = new File( attrBean.getReportDocumentName( ) );
-			if ( !file.exists( ) )
-			{
-				BirtRunReportActionHandler runReport = new BirtRunReportActionHandler(
-						context, op, upResponse );
-				runReport.execute( );
+		try {
+			File file = new File(attrBean.getReportDocumentName());
+			if (!file.exists()) {
+				BirtRunReportActionHandler runReport = new BirtRunReportActionHandler(context, op, upResponse);
+				runReport.execute();
 			}
 
 			// If document isn't completed, throw Exception
-			if ( attrBean.isDocumentProcessing( ) )
-			{
-				AxisFault fault = new AxisFault( );
-				fault
-						.setFaultReason( BirtResources
-								.getMessage( ResourceConstants.GENERAL_EXCEPTION_DOCUMENT_FILE_PROCESSING ) );
+			if (attrBean.isDocumentProcessing()) {
+				AxisFault fault = new AxisFault();
+				fault.setFaultReason(
+						BirtResources.getMessage(ResourceConstants.GENERAL_EXCEPTION_DOCUMENT_FILE_PROCESSING));
 				throw fault;
 			}
 
 			// Print report on server
 			boolean isPrint = false;
-			if ( IBirtConstants.ACTION_PRINT.equalsIgnoreCase( attrBean
-					.getAction( ) ) )
-			{
+			if (IBirtConstants.ACTION_PRINT.equalsIgnoreCase(attrBean.getAction())) {
 				isPrint = true;
-				out = new ByteArrayOutputStream( );
+				out = new ByteArrayOutputStream();
 			}
 
-			if ( ParameterAccessor.isGetReportlet( request ) )
-			{
+			if (ParameterAccessor.isGetReportlet(request)) {
 				// render reportlet
-				BirtGetReportletActionHandler renderReportlet = new BirtGetReportletActionHandler(
-						context, op, upResponse, out );
-				renderReportlet.execute( );
-			}
-			else
-			{
-				BirtRenderReportActionHandler renderReport = new BirtRenderReportActionHandler(
-						context, op, upResponse, out );
-				renderReport.execute( );
+				BirtGetReportletActionHandler renderReportlet = new BirtGetReportletActionHandler(context, op,
+						upResponse, out);
+				renderReportlet.execute();
+			} else {
+				BirtRenderReportActionHandler renderReport = new BirtRenderReportActionHandler(context, op, upResponse,
+						out);
+				renderReport.execute();
 			}
 
-			if ( isPrint )
-			{
-				InputStream inputStream = new ByteArrayInputStream(
-						( (ByteArrayOutputStream) out ).toByteArray( ) );
-				BirtUtility.doPrintAction( inputStream, request, response );
+			if (isPrint) {
+				InputStream inputStream = new ByteArrayInputStream(((ByteArrayOutputStream) out).toByteArray());
+				BirtUtility.doPrintAction(inputStream, request, response);
 			}
-		}
-		catch ( RemoteException e )
-		{
-			response.setContentType( "text/html; charset=utf-8" ); //$NON-NLS-1$
-			BirtUtility.appendErrorMessage( response.getOutputStream( ), e );
+		} catch (RemoteException e) {
+			response.setContentType("text/html; charset=utf-8"); //$NON-NLS-1$
+			BirtUtility.appendErrorMessage(response.getOutputStream(), e);
 		}
 
 	}
@@ -242,9 +194,8 @@ public class FramesetFragment extends BirtBaseFragment
 	/**
 	 * Override implementation of doPostService.
 	 */
-	protected String doPostService( HttpServletRequest request,
-			HttpServletResponse response ) throws ServletException, IOException
-	{
+	protected String doPostService(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		return null;
 	}
 }

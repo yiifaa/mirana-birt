@@ -16,6 +16,5 @@ package org.eclipse.birt.report.presentation.aggregation.control;
  * <p>
  * @see BaseFragment
  */
-public class ToolbarFragment extends BaseControlFragment
-{
+public class ToolbarFragment extends BaseControlFragment {
 }

@@ -13,6 +13,9 @@ import org.eclipse.birt.report.service.BirtReportServiceFactory;
 import org.eclipse.birt.report.service.BirtViewerReportService;
 import org.eclipse.birt.report.servlet.BirtSoapMessageDispatcherServlet;
 import org.eclipse.birt.report.utility.BirtUtility;
+
+import com.mirana.report.ReportConstants;
+
 import org.eclipse.birt.report.context.BirtContext;
 import org.eclipse.birt.report.context.IContext;
 import org.eclipse.birt.report.presentation.aggregation.IFragment;
@@ -25,8 +28,8 @@ import org.eclipse.birt.report.presentation.aggregation.layout.RunFragment;
  * There are four servlet mappings defined for ViewerServlet in the web.xml.
  * <ul>
  * <li>Frameset - Displays the whole web viewer frameset. (Public)</li>
- * <li>Run - Runs the report and displays the output as a stand-alone HTML
- * page, or as a PDF document. (Public)</li>
+ * <li>Run - Runs the report and displays the output as a stand-alone HTML page,
+ * or as a PDF document. (Public)</li>
  * <li>Navigation - Displays the leftside navigation frame that contains the
  * report parameter page. (Internal)</li>
  * <li>Toolbar - Displays the toolbar above the report content. (Internal)</li>
@@ -50,7 +53,8 @@ import org.eclipse.birt.report.presentation.aggregation.layout.RunFragment;
  * </ul>
  * </ul>
  * <p>
- * Each URL parameter is described below. <table border=1>
+ * Each URL parameter is described below.
+ * <table border=1>
  * <tr>
  * <td><b>Parameter</b></td>
  * <td><b>Description</b></td>
@@ -90,8 +94,7 @@ import org.eclipse.birt.report.presentation.aggregation.layout.RunFragment;
  * </table>
  * <p>
  */
-public class ViewerServlet extends BirtSoapMessageDispatcherServlet
-{
+public class ViewerServlet extends BirtSoapMessageDispatcherServlet {
 
 	/**
 	 * TODO: what's this?
@@ -99,24 +102,25 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Local initialization.
+	 * Local initialization. Birt有两个布局视图，分别是FramesetFragment与RunFragment
 	 * 
 	 * @return
-	 */
-	protected void __init( ServletConfig config )
-	{
-		BirtReportServiceFactory.init( new BirtViewerReportService( config
-				.getServletContext( ) ) );
+	 */   
+	protected void __init(ServletConfig config) {
+		//	初始化服务
+		BirtReportServiceFactory.init(new BirtViewerReportService(config.getServletContext()));
+		// 处理'frameset'模式
+		/**
+		 * JSP文件为pages/layout/FramesetFragment
+		 */
+		viewer = new FramesetFragment();
+		viewer.buildComposite();
+		viewer.setJSPRootPath(ReportConstants.JSP_ROOT); //$NON-NLS-1$
 
-		// handle 'frameset' pattern
-		viewer = new FramesetFragment( );
-		viewer.buildComposite( );
-		viewer.setJSPRootPath( "/webcontent/birt" ); //$NON-NLS-1$
-
-		// handle 'run' pattern
-		run = new RunFragment( );
-		run.buildComposite( );
-		run.setJSPRootPath( "/webcontent/birt" ); //$NON-NLS-1$		
+		// 处理 'run' 模式
+		run = new RunFragment();
+		run.buildComposite();
+		run.setJSPRootPath(ReportConstants.JSP_ROOT); //$NON-NLS-1$
 	}
 
 	/**
@@ -129,12 +133,9 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet
 	 * @exception BirtException
 	 * @return IContext
 	 */
-	protected IContext __getContext( HttpServletRequest request,
-			HttpServletResponse response ) throws BirtException
-	{
-		BirtReportServiceFactory.getReportService( ).setContext(
-				getServletContext( ), null );
-		return new BirtContext( request, response );
+	protected IContext __getContext(HttpServletRequest request, HttpServletResponse response) throws BirtException {
+		BirtReportServiceFactory.getReportService().setContext(getServletContext(), null);
+		return new BirtContext(request, response);
 	}
 
 	/**
@@ -148,24 +149,18 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet
 	 * @exception IOException
 	 * @return
 	 */
-	protected void __doGet( IContext context ) throws ServletException,
-			IOException, BirtException
-	{
+	protected void __doGet(IContext context) throws ServletException, IOException, BirtException {
 		IFragment activeFragment = null;
-		String servletPath = context.getRequest( ).getServletPath( );
-		//	如果是
+		String servletPath = context.getRequest().getServletPath();
+		// 如果是
 		if (IBirtConstants.SERVLET_PATH_FRAMESET.equalsIgnoreCase(servletPath)) {
 			activeFragment = viewer;
-		}
-		else if ( IBirtConstants.SERVLET_PATH_RUN
-				.equalsIgnoreCase( servletPath ) )
-		{
+		} else if (IBirtConstants.SERVLET_PATH_RUN.equalsIgnoreCase(servletPath)) {
 			activeFragment = run;
 		}
 
-		if ( activeFragment != null )
-			activeFragment.service( context.getRequest( ), context
-					.getResponse( ) );
+		if (activeFragment != null)
+			activeFragment.service(context.getRequest(), context.getResponse());
 	}
 
 	/**
@@ -180,9 +175,7 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet
 	 * @exception IOException
 	 * @return
 	 */
-	protected void __doPost( IContext context ) throws ServletException,
-			IOException, BirtException
-	{
+	protected void __doPost(IContext context) throws ServletException, IOException, BirtException {
 	}
 
 	/**
@@ -194,9 +187,7 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet
 	 *            http response
 	 * @return
 	 */
-	protected boolean __authenticate( HttpServletRequest request,
-			HttpServletResponse response )
-	{
+	protected boolean __authenticate(HttpServletRequest request, HttpServletResponse response) {
 		return true;
 	}
 
@@ -211,11 +202,10 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected void __handleNonSoapException( HttpServletRequest request,
-			HttpServletResponse response, Exception exception )
-			throws ServletException, IOException
-	{
-		exception.printStackTrace( );
-		BirtUtility.appendErrorMessage( response.getOutputStream( ), exception );
+	protected void __handleNonSoapException(HttpServletRequest request, HttpServletResponse response,
+			Exception exception) throws ServletException, IOException {
+		exception.printStackTrace();
+		BirtUtility.appendErrorMessage(response.getOutputStream(), exception);
 	}
+	
 }

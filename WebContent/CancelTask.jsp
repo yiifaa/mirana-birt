@@ -1,49 +1,31 @@
-<%-----------------------------------------------------------------------------
-	Copyright (c) 2004 Actuate Corporation and others.
-	All rights reserved. This program and the accompanying materials 
-	are made available under the terms of the Eclipse Public License v1.0
-	which accompanies this distribution, and is available at
-	http://www.eclipse.org/legal/epl-v10.html
-	
-	Contributors:
-		Actuate Corporation - Initial implementation.
------------------------------------------------------------------------------%>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page session="false" buffer="none" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="org.eclipse.birt.report.utility.BirtUtility,
 				 org.eclipse.birt.report.IBirtConstants,	
 				 org.eclipse.birt.report.resource.BirtResources" %>
-
-<%-----------------------------------------------------------------------------
-	Cancel Task
------------------------------------------------------------------------------%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-	<HEAD>
-		<TITLE>
-			<%= BirtResources.getMessage( "birt.viewer.title.message" )%>
-		</TITLE>
-		<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-		<LINK REL="stylesheet" HREF="<%= request.getContextPath( ) + "/webcontent/birt/styles/style.css" %>" TYPE="text/css">
-	</HEAD>
-	<%
-		String taskid = request.getParameter( IBirtConstants.OPRAND_TASKID );
-		try
-		{
-			BirtUtility.cancelTask( request, taskid );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace( );
-		}
-	%>
-	<BODY>
-		<TABLE CLASS="BirtViewer_Highlight_Label">
-			<TR>
-				<TD NOWRAP>
-					<%= BirtResources.getMessage( "birt.viewer.message.taskcanceled" )%>
-				</TD>
-			</TR>
-		</TABLE>
-	</BODY>
-</HTML>
+<!doctype html>
+<html lang="zh_CN">
+	<head>
+		<meta charset="UTF-8" />
+		<title><%= BirtResources.getMessage("birt.viewer.title.message")%></title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="<c:url value='/birt/styles/style.css'/>" media="all" />
+		<link rel="stylesheet" href="<c:url value='/statics/css/bootstrap.css'/>" media="all" />
+	</head>
+	<body>
+		<%
+			String taskid = request.getParameter(IBirtConstants.OPRAND_TASKID);
+			try {
+				BirtUtility.cancelTask(request, taskid);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		%>
+		<div class="container">
+			<h1><%= BirtResources.getMessage("birt.viewer.message.taskcanceled")%></h1>
+		</div>
+	</body>
+</html>

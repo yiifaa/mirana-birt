@@ -48,7 +48,7 @@
 					<TD WIDTH="6px"/>
 					<TD WIDTH="15px">
 					   <INPUT TYPE="image" NAME='toc' SRC="birt/images/Toc.gif"
-					   		TITLE="<%= BirtResources.getHtmlMessage( "birt.viewer.toolbar.toc" )%>"
+					   		TITLE="<%= BirtResources.getHtmlMessage( "birt.viewer.toolbar.toc")%>"
 					   		ALT="<%= BirtResources.getHtmlMessage( "birt.viewer.toolbar.toc" )%>" CLASS="birtviewer_clickable">
 					</TD>
 					<TD WIDTH="6px"/>

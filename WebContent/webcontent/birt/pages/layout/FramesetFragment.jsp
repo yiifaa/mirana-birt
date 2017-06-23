@@ -1,13 +1,3 @@
-<%-----------------------------------------------------------------------------
-	Copyright (c) 2004-2008 Actuate Corporation and others.
-	All rights reserved. This program and the accompanying materials 
-	are made available under the terms of the Eclipse Public License v1.0
-	which accompanies this distribution, and is available at
-	http://www.eclipse.org/legal/epl-v10.html
-	
-	Contributors:
-		Actuate Corporation - Initial implementation.
------------------------------------------------------------------------------%>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page session="false" buffer="none" %>
 <%@ page import="org.eclipse.birt.report.presentation.aggregation.IFragment,
@@ -15,38 +5,35 @@
 				 org.eclipse.birt.report.resource.ResourceConstants,
 				 org.eclipse.birt.report.resource.BirtResources,
 				 org.eclipse.birt.report.utility.ParameterAccessor" %>
-
-<%-----------------------------------------------------------------------------
-	Expected java beans
------------------------------------------------------------------------------%>
+				 
 <jsp:useBean id="fragment" type="org.eclipse.birt.report.presentation.aggregation.IFragment" scope="request" />
 <jsp:useBean id="attributeBean" type="org.eclipse.birt.report.context.BaseAttributeBean" scope="request" />
 
 <%
 	// base href can be defined in config file for deployment.
-	String baseHref = request.getScheme( ) + "://" + request.getServerName( ) + ":" + request.getServerPort( );
-	if( !attributeBean.isDesigner( ) )
+	String baseHref = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	if(!attributeBean.isDesigner())
 	{
-		String baseURL = ParameterAccessor.getBaseURL( );
-		if( baseURL != null )
+		String baseURL = ParameterAccessor.getBaseURL();
+		if(baseURL != null)
 			baseHref = baseURL;
 	}
-	baseHref += request.getContextPath( ) + fragment.getJSPRootPath( );
+	baseHref += request.getContextPath() + fragment.getJSPRootPath();
 %>
 
 <%-----------------------------------------------------------------------------
 	Viewer root fragment
 -----------------------------------------------------------------------------%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-<HTML lang="<%= ParameterAccessor.htmlEncode( attributeBean.getLanguage() ) %>">
+<HTML lang="<%= ParameterAccessor.htmlEncode(attributeBean.getLanguage()) %>">
 	<HEAD>
-		<TITLE><%= ParameterAccessor.htmlEncode( attributeBean.getReportTitle( ) ) %></TITLE>
+		<TITLE><%= ParameterAccessor.htmlEncode(attributeBean.getReportTitle()) %></TITLE>
 		<BASE href="<%= baseHref %>" >
 		
 		<META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8">
 		<LINK REL="stylesheet" HREF="birt/styles/style.css" TYPE="text/css">
 		<%
-		if( attributeBean.isRtl() )
+		if(attributeBean.isRtl())
 		{
 		%>
 		<LINK REL="stylesheet" HREF="birt/styles/dialogbase_rtl.css" MEDIA="screen" TYPE="text/css"/>
@@ -61,7 +48,7 @@
 		%>
 		<script type="text/javascript">			
 			<%
-			if( request.getAttribute("SoapURL") != null )
+			if(request.getAttribute("SoapURL") != null)
 			{
 			%>
 			var soapURL = "<%= (String)request.getAttribute("SoapURL")%>";
@@ -74,7 +61,7 @@
 			<%
 			}
 			%>
-			var rtl = <%= attributeBean.isRtl( ) %>;
+			var rtl = <%= attributeBean.isRtl() %>;
 		</script>
 		
 		<script src="birt/ajax/utility/Debug.js" type="text/javascript"></script>
@@ -82,7 +69,7 @@
 		<script src="birt/ajax/lib/head.js" type="text/javascript"></script>
 		
 		<script type="text/javascript">	
-			<%= attributeBean.getClientInitialize( ) %>
+			<%= attributeBean.getClientInitialize() %>
 		</script>
 		
 		<!-- Mask -->
@@ -136,7 +123,7 @@
 	
 	<BODY 
 		CLASS="BirtViewer_Body"  
-		ONLOAD="javascript:init( );" 
+		ONLOAD="javascript:init();" 
 		SCROLL="no" 
 		LEFTMARGIN='0px' 
 		STYLE='overflow:hidden; direction: <%= attributeBean.isRtl()?"rtl":"ltr" %>'
@@ -144,7 +131,7 @@
 		<!-- Header section -->
 		<TABLE ID='layout' CELLSPACING='0' CELLPADDING='0' STYLE='width:100%;height:100%'>
 			<%
-				if( attributeBean.isShowTitle( ) )
+				if(attributeBean.isShowTitle())
 				{
 			%>
 			<TR CLASS='body_caption_top'>
@@ -156,7 +143,7 @@
 						<TR>
 							<TD WIDTH="3px"/>
 							<TD>
-								<B><%= ParameterAccessor.htmlEncode( attributeBean.getReportTitle( ) ) %>
+								<B><%= ParameterAccessor.htmlEncode(attributeBean.getReportTitle()) %>
 								</B>
 							</TD>
 							<TD ALIGN='right'>
@@ -171,9 +158,9 @@
 			%>
 			
 			<%
-				if ( fragment != null )
+				if (fragment != null)
 				{
-					fragment.callBack( request, response );
+					fragment.callBack(request, response);
 				}
 			%>
 		</TABLE>
@@ -211,49 +198,49 @@
 		var BrowserUtility = new BrowserUtility();
 		DragDrop = new BirtDndManager();
 
-		var birtToolbar = new BirtToolbar( 'toolbar' );
-		var navigationBar = new BirtNavigationBar( 'navigationBar' );
-		var birtToc = new BirtToc( 'display0' );
-		var birtProgressBar = new BirtProgressBar( 'progressBar' );
-		var birtReportDocument = new BirtReportDocument( "Document", birtToc );
+		var birtToolbar = new BirtToolbar('toolbar');
+		var navigationBar = new BirtNavigationBar('navigationBar');
+		var birtToc = new BirtToc('display0');
+		var birtProgressBar = new BirtProgressBar('progressBar');
+		var birtReportDocument = new BirtReportDocument("Document", birtToc);
 
-		var birtParameterDialog = new BirtParameterDialog( 'parameterDialog', 'frameset' );
-		var birtSimpleExportDataDialog = new BirtSimpleExportDataDialog( 'simpleExportDataDialog' );
-		var birtExportReportDialog = new BirtExportReportDialog( 'exportReportDialog' );
-		var birtPrintReportDialog = new BirtPrintReportDialog( 'printReportDialog' );
-		var birtPrintReportServerDialog = new BirtPrintReportServerDialog( 'printReportServerDialog' );
-		var birtExceptionDialog = new BirtExceptionDialog( 'exceptionDialog' );
-		var birtConfirmationDialog = new BirtConfirmationDialog( 'confirmationDialog' );
+		var birtParameterDialog = new BirtParameterDialog('parameterDialog', 'frameset');
+		var birtSimpleExportDataDialog = new BirtSimpleExportDataDialog('simpleExportDataDialog');
+		var birtExportReportDialog = new BirtExportReportDialog('exportReportDialog');
+		var birtPrintReportDialog = new BirtPrintReportDialog('printReportDialog');
+		var birtPrintReportServerDialog = new BirtPrintReportServerDialog('printReportServerDialog');
+		var birtExceptionDialog = new BirtExceptionDialog('exceptionDialog');
+		var birtConfirmationDialog = new BirtConfirmationDialog('confirmationDialog');
 
 		// register the base elements to the mask, so their input
 		// will be disabled when a dialog is popped up.
-		Mask.setBaseElements( new Array( birtToolbar.__instance, navigationBar.__instance, birtReportDocument.__instance) );
+		Mask.setBaseElements(new Array(birtToolbar.__instance, navigationBar.__instance, birtReportDocument.__instance));
 		
 		function init()
 		{
-			soapURL = birtUtility.initSessionId( soapURL );
+			soapURL = birtUtility.initSessionId(soapURL);
 			
 		<%
-		if ( attributeBean.isShowParameterPage( ) )
+		if (attributeBean.isShowParameterPage())
 		{
 		%>
-			birtParameterDialog.__cb_bind( );
+			birtParameterDialog.__cb_bind();
 		<%
 		}
 		else
 		{
 		%>
-			soapURL = birtUtility.initDPI( soapURL );
-			navigationBar.__init_page( );
+			soapURL = birtUtility.initDPI(soapURL);
+			navigationBar.__init_page();
 		<%
 		}
 		%>
 		}
 		
 		// When link to internal bookmark, use javascript to fire an Ajax request
-		function catchBookmark( bookmark )
+		function catchBookmark(bookmark)
 		{	
-			birtEventDispatcher.broadcastEvent( birtEvent.__E_GETPAGE, { name : "__bookmark", value : bookmark } );		
+			birtEventDispatcher.broadcastEvent(birtEvent.__E_GETPAGE, { name : "__bookmark", value : bookmark });		
 		}
 		
 	</script>
