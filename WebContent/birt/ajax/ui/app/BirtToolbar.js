@@ -94,12 +94,12 @@ BirtToolbar.prototype = Object.extend( new AbstractBaseToolbar( ),
 				}
 				case 'toc':
 				{
-					birtEventDispatcher.broadcastEvent( birtEvent.__E_TOC );
+					birtEventDispatcher.broadcastEvent(birtEvent.__E_TOC );
 					break;
 				}
 				case 'parameter':
 				{
-					birtEventDispatcher.broadcastEvent( birtEvent.__E_PARAMETER );
+					birtEventDispatcher.broadcastEvent(birtEvent.__E_PARAMETER );
 					break;
 				}
 				default:

@@ -100,6 +100,9 @@
 			$.noConflict();
 		</script>
 		<script type="text/javascript" src="<c:url value='statics/js/bootstrap.min.js'/>"></script>
+		<!-- 
+		<script type="text/javascript" src="<c:url value='/birt/ajax/ui/dialog/ReportParameterDialog.js'/>"></script>
+		 -->
 	</head>
 	
 	<body style='overflow:hidden; direction: ${attributeBean.isRtl()?"rtl":"ltr"}; scroll:no;padding-top:50px;'>
@@ -181,7 +184,8 @@
 		function catchBookmark(bookmark) {	
 			birtEventDispatcher.broadcastEvent(birtEvent.__E_GETPAGE, { name : "__bookmark", value : bookmark });		
 		}
-		
+		//
+		//	birtParameterDialog = new ReportParameterDialog('parameterDialog')
 		jQuery(document).ready(function() {
 			function init() {
 				//	是否显示参数对话框

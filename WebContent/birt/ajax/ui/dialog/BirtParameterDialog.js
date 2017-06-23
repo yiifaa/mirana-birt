@@ -1,21 +1,10 @@
-/******************************************************************************
- *	Copyright (c) 2004 Actuate Corporation and others.
- *	All rights reserved. This program and the accompanying materials 
- *	are made available under the terms of the Eclipse Public License v1.0
- *	which accompanies this distribution, and is available at
- *		http://www.eclipse.org/legal/epl-v10.html
- *	
- *	Contributors:
- *		Actuate Corporation - Initial implementation.
- *****************************************************************************/
- 
 /**
  *	BirtParameterDialog
  *	...
  */
-BirtParameterDialog = Class.create( );
+BirtParameterDialog = Class.create();
 
-BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
+BirtParameterDialog.prototype = Object.extend(new AbstractParameterDialog(),
 {
 	/**
 	 *	Parameter dialog working state. Whether embedded inside
@@ -122,41 +111,41 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	Initialization routine required by "ProtoType" lib.
 	 *	@return, void
 	 */
-	initialize : function( id, mode )
+	initialize : function(id, mode)
 	{
 		this.__mode = mode || Constants.request.servletPath;
 		this.preVisible = false;
 
-		this._hint = document.getElementById( "birt_hint" );
+		this._hint = document.getElementById("birt_hint");
 		
 		// Change event for parameter text field
-		this.__neh_change_cascade_text_closure = this.__neh_change_cascade_text.bindAsEventListener( this );
-		this.__neh_change_select_closure = this.__neh_change_select.bindAsEventListener( this );
-		this.__neh_change_cascade_select_closure = this.__neh_change_cascade_select.bindAsEventListener( this );
+		this.__neh_change_cascade_text_closure = this.__neh_change_cascade_text.bindAsEventListener(this);
+		this.__neh_change_select_closure = this.__neh_change_select.bindAsEventListener(this);
+		this.__neh_change_cascade_select_closure = this.__neh_change_cascade_select.bindAsEventListener(this);
 				
-		if ( BrowserUtility.isIE6 )
+		if (BrowserUtility.isIE6)
 		{
 			// Mouse over event for Select field
-			this.__neh_mouseover_select_closure = this.__neh_mouseover_select.bindAsEventListener( this );
-			this.__neh_mouseout_select_closure = this.__neh_mouseout_select.bindAsEventListener( this );
+			this.__neh_mouseover_select_closure = this.__neh_mouseover_select.bindAsEventListener(this);
+			this.__neh_mouseout_select_closure = this.__neh_mouseout_select.bindAsEventListener(this);
 		}
 		
-		if ( BrowserUtility.isIE )
+		if (BrowserUtility.isIE)
 		{
 			// Focus events
-			this.__neh_focus_select_closure = this.__neh_focus_select.bindAsEventListener( this );
-			this.__neh_blur_select_closure = this.__neh_blur_select.bindAsEventListener( this );
+			this.__neh_focus_select_closure = this.__neh_focus_select.bindAsEventListener(this);
+			this.__neh_blur_select_closure = this.__neh_blur_select.bindAsEventListener(this);
 		}
 			    
-	    this.initializeBase( id );
+	    this.initializeBase(id);
 	    
-		if ( this.__mode == Constants.SERVLET_PARAMETER )
+		if (this.__mode == Constants.SERVLET_PARAMETER)
 		{
 			// Hide dialog title bar if embedded in designer.
 			this.__setTitleBarVisibile(false);
 		}
 	    
-	    this.__local_installEventHandlers_extend( id );
+	    this.__local_installEventHandlers_extend(id);
 	},
 
 	/**
@@ -165,44 +154,44 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@id, toolbar id (optional since there is only one toolbar)
 	 *	@return, void
 	 */
-	__local_installEventHandlers_extend : function( id )
+	__local_installEventHandlers_extend : function(id)
 	{
 		// Observe "keydown" event
-		this.keydown_closure = this.__neh_keydown.bindAsEventListener( this );
-		Event.observe( $(id), 'keydown', this.keydown_closure, false );
+		this.keydown_closure = this.__neh_keydown.bindAsEventListener(this);
+		Event.observe($(id), 'keydown', this.keydown_closure, false);
 		
-		var oSC = document.getElementById( "parameter_table" ).getElementsByTagName( "select" );
-		for( var i = 0; i < oSC.length; i++ )
+		var oSC = document.getElementById("parameter_table").getElementsByTagName("select");
+		for(var i = 0; i < oSC.length; i++)
 		{
 			var element = oSC[i];
-			Event.observe( element, 'change', this.__neh_change_select_closure, false );
+			Event.observe(element, 'change', this.__neh_change_select_closure, false);
 			
-			if ( BrowserUtility.isIE6 )
+			if (BrowserUtility.isIE6)
 			{
-				Event.observe( element, 'mouseover', this.__neh_mouseover_select_closure, false );
-				Event.observe( element, 'mouseout', this.__neh_mouseout_select_closure, false );
+				Event.observe(element, 'mouseover', this.__neh_mouseover_select_closure, false);
+				Event.observe(element, 'mouseout', this.__neh_mouseout_select_closure, false);
 			}
-			if ( BrowserUtility.isIE )
+			if (BrowserUtility.isIE)
 			{
-				Event.observe( element, 'focus', this.__neh_focus_select_closure, false );
-				Event.observe( element, 'blur', this.__neh_blur_select_closure, false );
+				Event.observe(element, 'focus', this.__neh_focus_select_closure, false);
+				Event.observe(element, 'blur', this.__neh_blur_select_closure, false);
 			}
 
 			// Set initial hint
-			if ( element.selectedIndex >= 0 )
+			if (element.selectedIndex >= 0)
 			{
 				element.title = element.options[element.selectedIndex].text;
 			}
 			
 			// Set size for multi-value parameter
-			if( element.multiple )
+			if(element.multiple)
 			{				
 				var len = oSC[i].options.length;				
-				if( len < this.MIN_MULTILINES )
+				if(len < this.MIN_MULTILINES)
 				{
 					len = this.MIN_MULTILINES;
 				}
-				else if( len > this.MAX_MULTLIINES )
+				else if(len > this.MAX_MULTLIINES)
 				{
 					len = this.MAX_MULTLIINES;
 				}
@@ -217,37 +206,37 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@data, data DOM tree (schema TBD)
 	 *	@return, void
 	 */
-	__bind : function( data )
+	__bind : function(data)
 	{
-		if ( !data )
+		if (!data)
 		{
 			return;
 		}
 		
-		var cascadeParamObj = data.getElementsByTagName( 'CascadeParameter' );
-		var confirmObj = data.getElementsByTagName( 'Confirmation' );
-		if ( cascadeParamObj.length > 0 )
+		var cascadeParamObj = data.getElementsByTagName('CascadeParameter');
+		var confirmObj = data.getElementsByTagName('Confirmation');
+		if (cascadeParamObj.length > 0)
 		{
-			this.__propogateCascadeParameter( data );
+			this.__propogateCascadeParameter(data);
 		}
-		else if ( confirmObj.length > 0 )
+		else if (confirmObj.length > 0)
 		{
-			this.__close( );
+			this.__close();
 		}
 		
 		// call the internal onDataChanged event handler
-		if ( this.__pendingCascadingCalls > 0 )
+		if (this.__pendingCascadingCalls > 0)
 		{
 			this.__pendingCascadingCalls--;
 		}
 		
-		if ( this.__pendingCascadingCalls == 0 && this.__onDataChanged )
+		if (this.__pendingCascadingCalls == 0 && this.__onDataChanged)
 		{
 			this.__pendingCascadingCalls = 0;
 			var callback = this.__onDataChanged; 
 			this.__onDataChanged = null;
 			// add the handler in the browser's event queue
-			window.setTimeout( callback, 0 );
+			window.setTimeout(callback, 0);
 		}
 	},
 
@@ -258,57 +247,57 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@counter, index of possible cascade parameter.
 	 *	@return, void
 	 */
-	__install_cascade_parameter_event_handler : function( table_param, counter )
+	__install_cascade_parameter_event_handler : function(table_param, counter)
 	{
-		var oSC = table_param.getElementsByTagName( "select" );
-		var matrix = new Array( );
+		var oSC = table_param.getElementsByTagName("select");
+		var matrix = new Array();
 		var m = 0;
 		
-		var oTRC = table_param.getElementsByTagName( "TR" );
-		for( var i = 0; i < oTRC.length; i++ )
+		var oTRC = table_param.getElementsByTagName("TR");
+		for(var i = 0; i < oTRC.length; i++)
 		{
-			var oSelect = oTRC[i].getElementsByTagName( "select" );
-			var oInput = oTRC[i].getElementsByTagName( "input" );
+			var oSelect = oTRC[i].getElementsByTagName("select");
+			var oInput = oTRC[i].getElementsByTagName("input");
 			var oCascadeFlag = "";
 			
-			if ( oInput && oInput.length > 0 )
+			if (oInput && oInput.length > 0)
 			{
 				var oLastInput = oInput[oInput.length - 1];
-				if ( oLastInput.id == "isCascade" )
+				if (oLastInput.id == "isCascade")
 					oCascadeFlag = oLastInput.value;
 			}
 						
 			// find select items to install event listener
-			if( oSelect.length > 0 && oCascadeFlag == "true" )
+			if(oSelect.length > 0 && oCascadeFlag == "true")
 			{
-				if ( i < oTRC.length - 1 )
+				if (i < oTRC.length - 1)
 				{
-					Event.observe( oSelect[0], 'change', this.__neh_change_cascade_select_closure, false );
+					Event.observe(oSelect[0], 'change', this.__neh_change_cascade_select_closure, false);
 					
 					// find text item to install event listener
 					var oText;
-					for( var j = 0; j < oInput.length; j++ )
+					for(var j = 0; j < oInput.length; j++)
 					{
-						if( oInput[j].type == "text" )
+						if(oInput[j].type == "text")
 						{
 							oText = oInput[j];
 							break;
 						}
 					}
-					if( oText )
+					if(oText)
 					{
-						Event.observe( oText, 'change', this.__neh_change_cascade_text_closure, false );
+						Event.observe(oText, 'change', this.__neh_change_cascade_text_closure, false);
 					}
 				}
 				
-				if( !matrix[m] )
+				if(!matrix[m])
 				{
 					matrix[m] = {};
 				}
 				
-				var name = oSelect[0].id.substr( 0, oSelect[0].id.length - 10 )
+				var name = oSelect[0].id.substr(0, oSelect[0].id.length - 10)
 				var value = oSelect[0].value;
-				if ( value == Constants.nullValue )
+				if (value == Constants.nullValue)
 				{
 					matrix[m].name = this.__isnull;
 					matrix[m++].value = name;
@@ -329,28 +318,28 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *
 	 *	@return, void
 	 */
-	collect_parameter : function( )
+	collect_parameter : function()
 	{
 		// Clear parameter array
-		this.__parameter = new Array( );		
+		this.__parameter = new Array();		
 				
 		var k = 0;
 		//oTRC[i] is <tr></tr> section
-		var oTRC = document.getElementById( "parameter_table" ).getElementsByTagName( "TR" );
-		for( var i = 0; i < oTRC.length; i++ )
+		var oTRC = document.getElementById("parameter_table").getElementsByTagName("TR");
+		for(var i = 0; i < oTRC.length; i++)
 		{
-			if( !this.__parameter[k] )
+			if(!this.__parameter[k])
 			{
 				this.__parameter[k] = { };
 			}
 			
 			//input element collection
-			var oIEC = oTRC[i].getElementsByTagName( "input" );
+			var oIEC = oTRC[i].getElementsByTagName("input");
 			//select element collection
-			var oSEC = oTRC[i].getElementsByTagName( "select" );
+			var oSEC = oTRC[i].getElementsByTagName("select");
 			//avoid group parameter
-			var oTable = oTRC[i].getElementsByTagName( "table" );
-			if( oTable.length > 0 || ( oSEC.length == 0 && oIEC.length == 0 ) || ( oIEC.length == 1 && oIEC[0].type == 'submit' ) )
+			var oTable = oTRC[i].getElementsByTagName("table");
+			if(oTable.length > 0 || (oSEC.length == 0 && oIEC.length == 0) || (oIEC.length == 1 && oIEC[0].type == 'submit'))
 			{
 				continue;
 			}
@@ -359,7 +348,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			var oType = oIEC[0].value;
 
 			// deal with "hidden" parameter
-			if( oType == 'hidden' )
+			if(oType == 'hidden')
 			{
 				var temp = oIEC[1];
 				this.__parameter[k].name = temp.name;
@@ -367,7 +356,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 				k++;
 				
 				// set display text
-				if( !this.__parameter[k] )
+				if(!this.__parameter[k])
 				{
 					this.__parameter[k] = { };
 				}
@@ -379,7 +368,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			}
 			
 			// deal with "checkbox" parameter
-			if( oType == 'checkbox' )
+			if(oType == 'checkbox')
 			{
 				var temp = oIEC[2];
 				this.__parameter[k].name = temp.value;
@@ -389,21 +378,21 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			}
 						
 			// deal with "text" parameter
-			if( oType == 'text' )
+			if(oType == 'text')
 			{
 				// data type of current parameter
 				var dataType = oIEC[1].value;
 				
 				// allow null
-				if( oIEC[2] && oIEC[2].type == 'radio' )
+				if(oIEC[2] && oIEC[2].type == 'radio')
 				{
-					if( oIEC[2].checked )
+					if(oIEC[2].checked)
 					{
 						var paramName = oIEC[3].name;
 						var paramValue = oIEC[4].value;
 						var displayText = oIEC[5].value;
 
-						if( displayText != oIEC[3].value )
+						if(displayText != oIEC[3].value)
 						{
 							// change the text field value,regard as a locale string
 							paramValue = oIEC[3].value;
@@ -415,25 +404,25 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						}
 																		
 						// check if required
-						if( this.__is_parameter_required( oIEC ) 
-							&& birtUtility.trim( paramValue ) == '' && this.visible )
+						if(this.__is_parameter_required(oIEC) 
+							&& birtUtility.trim(paramValue) == '' && this.visible)
 						{
-							oIEC[3].focus( );
-							alert( birtUtility.formatMessage( Constants.error.parameterRequired, paramName ) );
+							oIEC[3].focus();
+							alert(birtUtility.formatMessage(Constants.error.parameterRequired, paramName));
 							return false;
 						}
 						
 						// check if allow blank
-						if( !this.__is_parameter_allowblank( dataType )
-							&& birtUtility.trim( paramValue ) == '' && this.visible )
+						if(!this.__is_parameter_allowblank(dataType)
+							&& birtUtility.trim(paramValue) == '' && this.visible)
 						{
-							oIEC[3].focus( );
-							alert( birtUtility.formatMessage( Constants.error.parameterNotAllowBlank, paramName ) );
+							oIEC[3].focus();
+							alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
 							return false;							
 						}	
 													
 						// set parameter value
-						if( !this.__parameter[k] )
+						if(!this.__parameter[k])
 						{
 							this.__parameter[k] = { };
 						}
@@ -442,7 +431,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						k++;
 						
 						// set display text
-						if( !this.__parameter[k] )
+						if(!this.__parameter[k])
 						{
 							this.__parameter[k] = { };
 						}
@@ -467,12 +456,12 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 					var displayText = oIEC[4].value;
 
 					// convert spaces to non-breakable spaces if data type is a number					
-					if ( this.__is_parameter_number( dataType ) )
+					if (this.__is_parameter_number(dataType))
 					{
-						fieldValue = this.__convert_spaces_to_nbsp( fieldValue );
+						fieldValue = this.__convert_spaces_to_nbsp(fieldValue);
 					}
 					
-					if( displayText != fieldValue )
+					if(displayText != fieldValue)
 					{
 						// change the text field value,regard as a locale string
 						paramValue = fieldValue;
@@ -484,25 +473,25 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 					}
 															
 					// check if required
-					if( this.__is_parameter_required( oIEC ) 
-						&& birtUtility.trim( paramValue ) == '' && this.visible )
+					if(this.__is_parameter_required(oIEC) 
+						&& birtUtility.trim(paramValue) == '' && this.visible)
 					{
-						oIEC[2].focus( );
-						alert( birtUtility.formatMessage( Constants.error.parameterRequired, paramName ) );
+						oIEC[2].focus();
+						alert(birtUtility.formatMessage(Constants.error.parameterRequired, paramName));
 						return false;
 					}
 
 					// check if allow blank
-					if( !this.__is_parameter_allowblank( dataType )
-						&& birtUtility.trim( paramValue ) == '' && this.visible )
+					if(!this.__is_parameter_allowblank(dataType)
+						&& birtUtility.trim(paramValue) == '' && this.visible)
 					{
-						oIEC[2].focus( );
-						alert( birtUtility.formatMessage( Constants.error.parameterNotAllowBlank, paramName ) );
+						oIEC[2].focus();
+						alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
 						return false;							
 					}	
 												
 					// set parameter value
-					if( !this.__parameter[k] )
+					if(!this.__parameter[k])
 					{
 						this.__parameter[k] = { };
 					}
@@ -511,7 +500,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 					k++;
 						
 					// set display text
-					if( !this.__parameter[k] )
+					if(!this.__parameter[k])
 					{
 						this.__parameter[k] = { };
 					}
@@ -524,19 +513,19 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			}
 			
 			// deal with "radio" parameter
-			if( oType == 'radio' )
+			if(oType == 'radio')
 			{
 				var dataType = oIEC[1].value;
 				
-				if( oIEC.length > 2 )
+				if(oIEC.length > 2)
 				{
-					for( var j = 2; j < oIEC.length; j++ )
+					for(var j = 2; j < oIEC.length; j++)
 					{
 						// deal with radio
-						if( oIEC[j].type == 'radio' && oIEC[j].checked )
+						if(oIEC[j].type == 'radio' && oIEC[j].checked)
 						{
 							// null value
-							if( oIEC[j].id == oIEC[j].name + "_null" )
+							if(oIEC[j].id == oIEC[j].name + "_null")
 							{
 								this.__parameter[k].name = this.__isnull;
 								this.__parameter[k].value = oIEC[j].name;
@@ -545,11 +534,11 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 							else
 							{
 								// check if allow blank
-								if( !this.__is_parameter_allowblank( dataType )
-									&& birtUtility.trim( oIEC[j].value ) == '' && this.visible )
+								if(!this.__is_parameter_allowblank(dataType)
+									&& birtUtility.trim(oIEC[j].value) == '' && this.visible)
 								{
-									oIEC[j].focus( );
-									alert( birtUtility.formatMessage( Constants.error.parameterNotAllowBlank, oIEC[j].name ) );
+									oIEC[j].focus();
+									alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, oIEC[j].name));
 									return false;							
 								}	
 							
@@ -559,10 +548,10 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 								k++;
 								
 								// set display text for the "radio" parameter
-								var displayLabel = document.getElementById( oIEC[j].id + "_label" );
-								if( displayLabel )
+								var displayLabel = document.getElementById(oIEC[j].id + "_label");
+								if(displayLabel)
 								{							
-									if( !this.__parameter[k] )
+									if(!this.__parameter[k])
 									{
 										this.__parameter[k] = { };
 									}
@@ -581,56 +570,56 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			}
 			
 			// deal with "select" parameter
-			if( oType == 'select' && oSEC.length == 1 )
+			if(oType == 'select' && oSEC.length == 1)
 			{
 				var dataType = oIEC[1].value;
 				var paramName = oIEC[2].name;
 				
 				var flag = true;
-				if( oIEC[3] && oIEC[3].type == 'radio' && !oIEC[3].checked )
+				if(oIEC[3] && oIEC[3].type == 'radio' && !oIEC[3].checked)
 				{
 					flag = false;
 				}
 				
 				// need check selection
-				if( flag )
+				if(flag)
 				{
-					if ( this.__is_parameter_required( oIEC ) && oSEC[0].selectedIndex < 0 && this.visible )
+					if (this.__is_parameter_required(oIEC) && oSEC[0].selectedIndex < 0 && this.visible)
 					{
-						oSEC[0].focus( );
-						alert( birtUtility.formatMessage( Constants.error.parameterNotSelected, paramName ) );
+						oSEC[0].focus();
+						alert(birtUtility.formatMessage(Constants.error.parameterNotSelected, paramName));
 						return false;
 					}
 																									
-					if( oSEC[0].multiple )
+					if(oSEC[0].multiple)
 					{
 						var options = oSEC[0].options;
-						for( var l = 0; l < options.length; l++ )
+						for(var l = 0; l < options.length; l++)
 						{
-							if( !options[l].selected )
+							if(!options[l].selected)
 								continue;
 							
 							var tempText = options[l].text;
 							var tempValue = options[l].value;
 															
 							// check if isRequired
-							if( this.__is_parameter_required( oIEC ) 
-								&& birtUtility.trim( tempValue ) == '' && this.visible )
+							if(this.__is_parameter_required(oIEC) 
+								&& birtUtility.trim(tempValue) == '' && this.visible)
 							{
-								oSEC[0].focus( );
-								alert( birtUtility.formatMessage( Constants.error.parameterRequired, paramName ) );
+								oSEC[0].focus();
+								alert(birtUtility.formatMessage(Constants.error.parameterRequired, paramName));
 								return false;									
 							}
 							
-							if( tempValue == Constants.nullValue )
+							if(tempValue == Constants.nullValue)
 								continue;
 								
 							// check if allow blank
-							if( !this.__is_parameter_allowblank( dataType )
-								&& birtUtility.trim( tempValue ) == '' && this.visible )
+							if(!this.__is_parameter_allowblank(dataType)
+								&& birtUtility.trim(tempValue) == '' && this.visible)
 							{
-								oSEC[0].focus( );
-								alert( birtUtility.formatMessage( Constants.error.parameterNotAllowBlank, paramName ) );
+								oSEC[0].focus();
+								alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
 								return false;							
 							}									
 						}
@@ -641,16 +630,16 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						var tempValue = oSEC[0].options[oSEC[0].selectedIndex].value;
 											
 						// check if isRequired
-						if ( this.__is_parameter_required( oIEC )
-							 && birtUtility.trim( tempValue ) == '' && this.visible )
+						if (this.__is_parameter_required(oIEC)
+							 && birtUtility.trim(tempValue) == '' && this.visible)
 						{
-							oSEC[0].focus( );
-							alert( birtUtility.formatMessage( Constants.error.parameterRequired, paramName ) );
+							oSEC[0].focus();
+							alert(birtUtility.formatMessage(Constants.error.parameterRequired, paramName));
 							return false;
 						}
 
 						// Check if select 'Null Value' option for single parameter
-						if( tempValue == Constants.nullValue )
+						if(tempValue == Constants.nullValue)
 						{
 							this.__parameter[k].name = this.__isnull;
 							this.__parameter[k].value = paramName;
@@ -659,20 +648,20 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						}
 							
 						// check if allow blank
-						if( !this.__is_parameter_allowblank( dataType )
-							&& birtUtility.trim( tempValue ) == '' && this.visible )
+						if(!this.__is_parameter_allowblank(dataType)
+							&& birtUtility.trim(tempValue) == '' && this.visible)
 						{
-							oSEC[0].focus( );
-							alert( birtUtility.formatMessage( Constants.error.parameterNotAllowBlank, paramName ) );
+							oSEC[0].focus();
+							alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
 							return false;							
 						}							
 					}					
 				}
 				
 				// allow new value
-				if( oIEC[3] && oIEC[3].type == 'radio' )
+				if(oIEC[3] && oIEC[3].type == 'radio')
 				{					
-					if( oIEC[3].checked )
+					if(oIEC[3].checked)
 					{
 						// select value
 						var tempText = oSEC[0].options[oSEC[0].selectedIndex].text;
@@ -684,7 +673,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						k++;
 						
 						// set display text
-						if( !this.__parameter[k] )
+						if(!this.__parameter[k])
 						{
 							this.__parameter[k] = { };
 						}
@@ -699,7 +688,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						var displayText = oIEC[6].value;
 						
 						// if change the text field value or input text field isn't focus default,regard as a locale string 
-						if( displayText != inputValue || oIEC[5].name.length <= 0 )
+						if(displayText != inputValue || oIEC[5].name.length <= 0)
 						{							
 							paramValue = inputValue;
 							
@@ -710,25 +699,25 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						}
 						
 						// check if isRequired
-						if ( this.__is_parameter_required( oIEC ) 
-							 && birtUtility.trim( paramValue ) == '' && this.visible )
+						if (this.__is_parameter_required(oIEC) 
+							 && birtUtility.trim(paramValue) == '' && this.visible)
 						{
-							oIEC[5].focus( );
-							alert( birtUtility.formatMessage( Constants.error.parameterRequired, paramName ) );
+							oIEC[5].focus();
+							alert(birtUtility.formatMessage(Constants.error.parameterRequired, paramName));
 							return false;
 						}						
 
 						// check if allow blank
-						if( !this.__is_parameter_allowblank( dataType )
-							&& birtUtility.trim( paramValue ) == '' && this.visible )
+						if(!this.__is_parameter_allowblank(dataType)
+							&& birtUtility.trim(paramValue) == '' && this.visible)
 						{
-							oIEC[5].focus( );
-							alert( birtUtility.formatMessage( Constants.error.parameterNotAllowBlank, paramName ) );
+							oIEC[5].focus();
+							alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
 							return false;							
 						}	
 						
 						// set value
-						if( !this.__parameter[k] )
+						if(!this.__parameter[k])
 						{
 							this.__parameter[k] = { };
 						}
@@ -737,7 +726,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						k++;
 											
 						// set display text
-						if( !this.__parameter[k] )
+						if(!this.__parameter[k])
 						{
 							this.__parameter[k] = { };
 						}
@@ -751,25 +740,25 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 					// don't allow new value
 					
 					// multi-value case
-					if( oSEC[0].multiple )
+					if(oSEC[0].multiple)
 					{
 						// allow multi value
 						var options = oSEC[0].options;
 						// record the old length
 						var ck = k;
 						
-						for( var l = 0; l < options.length; l++ )
+						for(var l = 0; l < options.length; l++)
 						{
-							if( !options[l].selected )
+							if(!options[l].selected)
 								continue;
 							
 							var tempText = options[l].text;
 							var tempValue = options[l].value;
 							
 							// Check if select 'Null Value' option
-							if( tempValue == Constants.nullValue )
+							if(tempValue == Constants.nullValue)
 							{
-								if( !this.__parameter[k] )
+								if(!this.__parameter[k])
 								{
 									this.__parameter[k] = { };
 								}
@@ -781,7 +770,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 							}		
 
 							// set value
-							if( !this.__parameter[k] )
+							if(!this.__parameter[k])
 							{
 								this.__parameter[k] = { };
 							}
@@ -790,7 +779,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 							k++;
 						
 							// set display text
-							if( !this.__parameter[k] )
+							if(!this.__parameter[k])
 							{
 								this.__parameter[k] = { };
 							}
@@ -800,9 +789,9 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						}
 						
 						// compare the length, if no any selection processed, should be an empty list.
-						if ( ck == k )
+						if (ck == k)
 						{
-							if( !this.__parameter[k] )
+							if(!this.__parameter[k])
 							{
 								this.__parameter[k] = { };
 							}
@@ -824,7 +813,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 						k++;
 						
 						// set display text
-						if( !this.__parameter[k] )
+						if(!this.__parameter[k])
 						{
 							this.__parameter[k] = { };
 						}
@@ -847,16 +836,16 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@oInputs, Input control collection 
 	 *	@return, true or false
 	 */
-	__is_parameter_required : function( oInputs )
+	__is_parameter_required : function(oInputs)
 	{
-		if( !oInputs || oInputs.length <= 0 )
+		if(!oInputs || oInputs.length <= 0)
 			return false;
 		
 		var flag = false;		
-		for( var i = 0; i< oInputs.length; i++ )
+		for(var i = 0; i< oInputs.length; i++)
 		{
 			// if find defined input control
-			if( oInputs[i].id == 'isRequired' && oInputs[i].value == 'true' )
+			if(oInputs[i].id == 'isRequired' && oInputs[i].value == 'true')
 			{
 				flag = true;
 				break;		
@@ -873,15 +862,15 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@dataType, data type for parameter 
 	 *	@return, true or false
 	 */
-	__is_parameter_allowblank : function( dataType )
+	__is_parameter_allowblank : function(dataType)
 	{
-		if( !dataType )
+		if(!dataType)
 			return false;
 		
-		if( dataType == Constants.TYPE_ANY )
+		if(dataType == Constants.TYPE_ANY)
 			return true;
 		
-		if( dataType == Constants.TYPE_STRING )
+		if(dataType == Constants.TYPE_STRING)
 			return true;
 
 		return false;		
@@ -893,14 +882,14 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@dataType data type for parameter 
 	 *	@return true or false
 	 */
-	__is_parameter_number : function( dataType )
+	__is_parameter_number : function(dataType)
 	{
-		if( !dataType )
+		if(!dataType)
 			return false;
 		
-		return ( dataType == Constants.TYPE_FLOAT				
+		return (dataType == Constants.TYPE_FLOAT				
 				|| dataType == Constants.TYPE_DECIMAL
-				|| dataType == Constants.TYPE_INTEGER );		
+				|| dataType == Constants.TYPE_INTEGER);		
 	},
 	
 	/**
@@ -910,17 +899,17 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 * @param value formatted string to process
 	 * @return processed string
 	 */
-	__convert_spaces_to_nbsp : function( aValue )
+	__convert_spaces_to_nbsp : function(aValue)
 	{
 		var value = aValue;
 		var startIndex = value.search(/\d/);
-		if ( startIndex < 0 )
+		if (startIndex < 0)
 		{
 			return value;
 		}
 		
 		var endIndex = value.search(/\d\D*$/);
-		if ( endIndex < 0 )
+		if (endIndex < 0)
 		{
 			endIndex = value.length;
 		}
@@ -939,19 +928,19 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */
-	__neh_mouseover_select : function( event )
+	__neh_mouseover_select : function(event)
 	{	
-		var oSC = Event.element( event );
+		var oSC = Event.element(event);
 		var tempText;
-		if( oSC.selectedIndex >=0 )
+		if(oSC.selectedIndex >=0)
 			tempText = oSC.options[oSC.selectedIndex].text;
 		
-		if( tempText && this._hint )
+		if(tempText && this._hint)
 		{
 			this._hint.innerHTML = tempText;
 			this._hint.style.display = "block";
-			this._hint.style.left = ( event.clientX - parseInt( this.__instance.style.left ) ) + "px";
-			this._hint.style.top = ( 15 + event.clientY - parseInt( this.__instance.style.top ) ) + "px";
+			this._hint.style.left = (event.clientX - parseInt(this.__instance.style.left)) + "px";
+			this._hint.style.top = (15 + event.clientY - parseInt(this.__instance.style.top)) + "px";
 		}			
 	},
 
@@ -961,9 +950,9 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */
-	__neh_mouseout_select : function( event )
+	__neh_mouseout_select : function(event)
 	{
-		if( this._hint )
+		if(this._hint)
 		{
 			this._hint.style.display = "none"; 
 		}			
@@ -976,10 +965,10 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@return, void
 	 */
 
-	__neh_focus_select : function( event )
+	__neh_focus_select : function(event)
 	{
-		var el = Event.element( event );
-		if ( el )
+		var el = Event.element(event);
+		if (el)
 		{
 			this.__currentSelectedIndex = el.selectedIndex;
 		}
@@ -995,15 +984,15 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */	
-	__neh_blur_select : function( event )
+	__neh_blur_select : function(event)
 	{	
-		var el = Event.element( event );
+		var el = Event.element(event);
 
 		// prevents firing onchange twice, if the previous onchange has 
 		// already updated the current selected index
-		if ( el && el.selectedIndex != this.__currentSelectedIndex)
+		if (el && el.selectedIndex != this.__currentSelectedIndex)
 		{
-			this.__neh_change_cascade_select( event );
+			this.__neh_change_cascade_select(event);
 		}
 		this.__currentSelectedIndex = -2;
 	},
@@ -1014,10 +1003,10 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */	
-	__neh_change_select : function( event )
+	__neh_change_select : function(event)
 	{
-		var element = Event.element( event );
-		if ( element.selectedIndex >= 0 )
+		var element = Event.element(event);
+		if (element.selectedIndex >= 0)
 		{
 			element.title = element.options[element.selectedIndex].text;
 		}
@@ -1034,9 +1023,9 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event incoming browser native event
 	 *	@return
 	 */
-	__neh_change_cascade_select : function( event )
+	__neh_change_cascade_select : function(event)
 	{
-		if ( this.__cancelOnChange )
+		if (this.__cancelOnChange)
 		{
 			/**
 			 * Cancel event because of keyboard selection.
@@ -1046,7 +1035,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			return;
 		}
 
-		var element = Event.element( event );		
+		var element = Event.element(event);		
 		this.__currentSelectedIndex = element.selectedIndex;
 		this.__refresh_cascade_select(element);
 	},
@@ -1054,41 +1043,41 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	/**
 	 *	Refreshes the cascading elements following the given element.
 	 */
-	__refresh_cascade_select : function( element )
+	__refresh_cascade_select : function(element)
 	{
-	    var matrix = new Array( );
+	    var matrix = new Array();
 	    var m = 0;
-        for( var i = 0; i < this.__cascadingParameter.length; i++ )
+        for(var i = 0; i < this.__cascadingParameter.length; i++)
         {
-            for( var j = 0; j < this.__cascadingParameter[i].length; j++ )
+            for(var j = 0; j < this.__cascadingParameter[i].length; j++)
             {
             	var paramName = this.__cascadingParameter[i][j].name;
-            	if( paramName == this.__isnull )
+            	if(paramName == this.__isnull)
             		paramName = this.__cascadingParameter[i][j].value;
             		
-                if( paramName == element.id.substr( 0, element.id.length - 10 ) )
+                if(paramName == element.id.substr(0, element.id.length - 10))
                 {
                 	var tempText = element.options[element.selectedIndex].text;
 					var tempValue = element.options[element.selectedIndex].value;
 					 
             		// Null Value Parameter
-					if ( tempValue == Constants.nullValue )
+					if (tempValue == Constants.nullValue)
 					{
             			this.__cascadingParameter[i][j].name = this.__isnull;
             			this.__cascadingParameter[i][j].value = paramName;
 					}					
-					else if( tempValue == '' )
+					else if(tempValue == '')
                 	{
-                		if( tempText == "" )
+                		if(tempText == "")
                 		{
                 			var target = element;
 							target = target.parentNode;
-							var oInputs = target.getElementsByTagName( "input" );
-							if( oInputs.length >0 && oInputs[1].value != Constants.TYPE_STRING )
+							var oInputs = target.getElementsByTagName("input");
+							if(oInputs.length >0 && oInputs[1].value != Constants.TYPE_STRING)
 							{
 								// Only String parameter allows blank value
-								alert( birtUtility.formatMessage( Constants.error.parameterNotAllowBlank, paramName ) );
-								this.__clearSubCascadingParameter( this.__cascadingParameter[i], j );
+								alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
+								this.__clearSubCascadingParameter(this.__cascadingParameter[i], j);
 								return;
 							}
 							else
@@ -1111,9 +1100,9 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
                 	    this.__cascadingParameter[i][j].value = tempValue;
                 	}
                 	
-                    for( var m = 0; m <= j; m++ )
+                    for(var m = 0; m <= j; m++)
                     {
-					    if( !matrix[m] )
+					    if(!matrix[m])
 				        {
 				            matrix[m] = {};
 				        }
@@ -1121,7 +1110,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 				        matrix[m].value = this.__cascadingParameter[i][m].value;
 				    }
 				    this.__pendingCascadingCalls++;
-                    birtEventDispatcher.broadcastEvent( birtEvent.__E_CASCADING_PARAMETER, matrix );
+                    birtEventDispatcher.broadcastEvent(birtEvent.__E_CASCADING_PARAMETER, matrix);
                 }
             }
         }
@@ -1134,14 +1123,14 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 */
 	__clearSubCascadingParameterByName: function(parameterName)
 	{
-        for( var i = 0; i < this.__cascadingParameter.length; i++ )
+        for(var i = 0; i < this.__cascadingParameter.length; i++)
         {
-            for( var j = 0; j < this.__cascadingParameter[i].length; j++ )
+            for(var j = 0; j < this.__cascadingParameter[i].length; j++)
             {
             	var paramName = this.__cascadingParameter[i][j].name;
-                if( paramName == parameterName )
+                if(paramName == parameterName)
                 {
-    				this.__clearSubCascadingParameter( this.__cascadingParameter[i], j );                	
+    				this.__clearSubCascadingParameter(this.__cascadingParameter[i], j);                	
                 }
             }
         }
@@ -1154,21 +1143,21 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *  @index
 	 *	@return, void
 	 */	
-	__clearSubCascadingParameter : function( cascadingParameterGroup, index )
+	__clearSubCascadingParameter : function(cascadingParameterGroup, index)
 	{
-		for( var i = index + 1; i < cascadingParameterGroup.length; i++ )
+		for(var i = index + 1; i < cascadingParameterGroup.length; i++)
 		{
 			var param_name = cascadingParameterGroup[i].name;
-			if( param_name == this.__isnull )
+			if(param_name == this.__isnull)
 				param_name = cascadingParameterGroup[i].value;
 				
-			var selection = document.getElementById( param_name + "_selection" );
+			var selection = document.getElementById(param_name + "_selection");
 			var len = selection.options.length;
 			
 			// Clear our selection list.
-			for( var j = 0; j < len; j++ )
+			for(var j = 0; j < len; j++)
 			{
-				selection.remove( 0 );
+				selection.remove(0);
 			}
 		}	
 	},
@@ -1179,46 +1168,46 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */	
-	__neh_click_radio : function( event )
+	__neh_click_radio : function(event)
 	{
-		var temp = Event.element( event );
-		var oInput = temp.parentNode.getElementsByTagName( "input" );
-		var oSelect = temp.parentNode.getElementsByTagName( "select" );
+		var temp = Event.element(event);
+		var oInput = temp.parentNode.getElementsByTagName("input");
+		var oSelect = temp.parentNode.getElementsByTagName("select");
 		
 		// check if current parameter is cascading parameter
 		var oCascadeFlag = false;
-		if ( oInput && oInput.length > 0 )
+		if (oInput && oInput.length > 0)
 		{
 			var oLastInput = oInput[oInput.length - 1];
-			if ( oLastInput.id == "isCascade" )
-				oCascadeFlag = ( oLastInput.value == "true" );
+			if (oLastInput.id == "isCascade")
+				oCascadeFlag = (oLastInput.value == "true");
 		}
 		
 		var oSelectElement = oSelect[0];
 		
-		for( var i = 0; i < oInput.length; i++ )
+		for(var i = 0; i < oInput.length; i++)
 		{
-			if( oInput[i].id == temp.id )
+			if(oInput[i].id == temp.id)
 			{
 				var element = oInput[i+1]; 
 				//enable the next component
 				oInput[i].checked = true;
-				if( element && ( element.type == "text" || element.type == "password" ) )
+				if(element && (element.type == "text" || element.type == "password"))
 				{
 					element.disabled = false;
-					element.focus( );
-					if ( oCascadeFlag )
+					element.focus();
+					if (oCascadeFlag)
 					{
 						// refresh cascading elements (remove the "_input" suffix)
 						this.__clearSubCascadingParameterByName(element.id.substr(0, element.id.length - 6));
 					}
 				}
-				else if( oSelectElement )
+				else if(oSelectElement)
 				{
 					oSelectElement.selectedIndex = 0;
 					oSelectElement.disabled = false;
-					oSelectElement.focus( );
-					if ( oCascadeFlag )
+					oSelectElement.focus();
+					if (oCascadeFlag)
 					{
 						// refresh cascading elements (remove the "_selection" suffix)
 						this.__clearSubCascadingParameterByName(oSelectElement.id.substr(0, oSelectElement.id.length - 10));
@@ -1226,25 +1215,25 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 				}
 			}
 			// if i points to the element that must be disabled
-			else if( oInput[i].type == "radio" && oInput[i].id != temp.id )			
+			else if(oInput[i].type == "radio" && oInput[i].id != temp.id)			
 			{				
 				var element = oInput[i+1];
 				//disable the next component and clear the radio
 				oInput[i].checked = false;
-				if( element && ( element.type == "text" || element.type == "password" ) )
+				if(element && (element.type == "text" || element.type == "password"))
 				{
 					element.disabled = true;
 					// if cascading parameter, clear value 
-					if ( oCascadeFlag )
+					if (oCascadeFlag)
 					{
 						element.value = "";
 					}
 				}
-				else if( oSelectElement )
+				else if(oSelectElement)
 				{
 					oSelectElement.disabled = true;
 					// if cascading parameter, clear value
-					if ( oCascadeFlag )
+					if (oCascadeFlag)
 					{
 						oSelectElement.selectedIndex = -1;
 						oSelectElement.title = "";
@@ -1257,15 +1246,15 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	/**
 	 * Check whether obj is the last select control
 	 */
-	__ifLastSelect : function( obj )
+	__ifLastSelect : function(obj)
 	{
-		if( obj )
+		if(obj)
 		{
 			var oTABLE = obj.parentNode.parentNode.parentNode;
-			if( oTABLE )
+			if(oTABLE)
 			{
-				var oSelect = oTABLE.getElementsByTagName( "select" );
-				if( oSelect && oSelect.length > 0 && oSelect[oSelect.length - 1].id == obj.id )
+				var oSelect = oTABLE.getElementsByTagName("select");
+				if(oSelect && oSelect.length > 0 && oSelect[oSelect.length - 1].id == obj.id)
 				{
 					return true;	
 				}
@@ -1280,31 +1269,31 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */
-	__neh_change_cascade_text : function( event )
+	__neh_change_cascade_text : function(event)
 	{	
-		var temp = Event.element( event );
+		var temp = Event.element(event);
 		this.__refresh_cascade_text(temp);
 	},
 	
 	/**
 	 * Refresh cascade elements from a text box.
 	 */
-	__refresh_cascade_text : function( element )
+	__refresh_cascade_text : function(element)
 	{		
 		// trim the "_text" suffix from the parameter name
-		var paramName = element.id.substr( 0, element.id.length - 6 );
-	    var matrix = new Array( );
+		var paramName = element.id.substr(0, element.id.length - 6);
+	    var matrix = new Array();
 	    var m = 0;
-        for( var i = 0; i < this.__cascadingParameter.length; i++ )
+        for(var i = 0; i < this.__cascadingParameter.length; i++)
         {
-            for( var j = 0; j < this.__cascadingParameter[i].length; j++ )
+            for(var j = 0; j < this.__cascadingParameter[i].length; j++)
             {
-                if( this.__cascadingParameter[i][j].name == paramName )
+                if(this.__cascadingParameter[i][j].name == paramName)
                 {
                     this.__cascadingParameter[i][j].value = element.value;
-                    for( var m = 0; m <= j; m++ )
+                    for(var m = 0; m <= j; m++)
                     {
-					    if( !matrix[m] )
+					    if(!matrix[m])
 				        {
 				            matrix[m] = {};
 				        }
@@ -1312,7 +1301,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 				        matrix[m].value = this.__cascadingParameter[i][m].value;			
 				    }
 				    this.__pendingCascadingCalls++;
-                    birtEventDispatcher.broadcastEvent( birtEvent.__E_CASCADING_PARAMETER, matrix );
+                    birtEventDispatcher.broadcastEvent(birtEvent.__E_CASCADING_PARAMETER, matrix);
                 }
             }
         }	
@@ -1324,36 +1313,36 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */
-	__neh_keydown: function( event )
+	__neh_keydown: function(event)
 	{
 		// If press 'Enter' key
-		if( event.keyCode == 13 )
+		if(event.keyCode == 13)
 		{			
-			var target = Event.element( event );
+			var target = Event.element(event);
 						
 			// Focus on INPUT and SELECT controls
-			if ( target.tagName == "INPUT" || target.tagName == "SELECT" )
+			if (target.tagName == "INPUT" || target.tagName == "SELECT")
 			{			
 				// (exclude 'button' type for non-Safari browsers)
-				if ( target.type != "button" )
+				if (target.type != "button")
 				{
 					// blur the focus to force the onchange/onselect events
 					target.blur();
 					// defer okPress to let those events run first
-					window.setTimeout( this.__okPress.bindAsEventListener(this), 0 );				
+					window.setTimeout(this.__okPress.bindAsEventListener(this), 0);				
 				}
 				// Safari needs explicit click
-				else if ( BrowserUtility.isSafari || BrowserUtility.isKHTML )
+				else if (BrowserUtility.isSafari || BrowserUtility.isKHTML)
 				{
 					target.click();
 					// prevent browser "beep"
-					Event.stop( event );					
+					Event.stop(event);					
 				}
 			}
 
 		}
 		// in IE, when a key is pressed on a select box, cancel the onchange event 
-		else if ( BrowserUtility.isIE && event.keyCode != 9 && Event.element( event ).tagName == "SELECT" )
+		else if (BrowserUtility.isIE && event.keyCode != 9 && Event.element(event).tagName == "SELECT")
 		{
 			this.__cancelOnChange = true;
 		}
@@ -1365,10 +1354,10 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */
-	__okPress : function( )
+	__okPress : function()
 	{
 		// if a cascading parameter just changed
-		if ( this.__pendingCascadingCalls > 0 )
+		if (this.__pendingCascadingCalls > 0)
 		{
 			debug("defer okPress call");
 			// defer the call to the okPress function until the data has been updated
@@ -1376,64 +1365,64 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			return; 
 		}		
 
-		if( birtParameterDialog.collect_parameter( ) )
+		if(birtParameterDialog.collect_parameter())
 		{
 			// workaround for Bugzilla Bug 146566. 
 			// If change parameter and re-generate docuemnt file, close TOC panel.
-			if ( this.__mode == Constants.SERVLET_FRAMESET )
+			if (this.__mode == Constants.SERVLET_FRAMESET)
 			{
-				var oToc = $( 'display0' );
-				var oDoc = $( 'Document' );
-				if( oToc && oDoc )
+				var oToc = $('display0');
+				var oDoc = $('Document');
+				if(oToc && oDoc)
 				{ 		
-					oDoc.style.width = BirtPosition.viewportWidth( ) + "px";
+					oDoc.style.width = BirtPosition.viewportWidth() + "px";
 					oToc.style.display="none";
 					oToc.query = '0';
 				}
 			}
 		
-			var action = soapURL.toLowerCase( );
+			var action = soapURL.toLowerCase();
 			
-			if ( this.__mode == Constants.SERVLET_PARAMETER )
+			if (this.__mode == Constants.SERVLET_PARAMETER)
 			{
 				// check whether set __nocache setting in URL
-				if ( this.__ifCache( action ) )
-					birtEventDispatcher.broadcastEvent( birtEvent.__E_CACHE_PARAMETER );
+				if (this.__ifCache(action))
+					birtEventDispatcher.broadcastEvent(birtEvent.__E_CACHE_PARAMETER);
 				else
-					this.__doSubmitWithPattern( );
+					this.__doSubmitWithPattern();
 			}
-			else if ( this.__ifSubmit( this.__mode, action ) )
+			else if (this.__ifSubmit(this.__mode, action))
 			{
-				this.__doSubmit( );
+				this.__doSubmit();
 			}
 			else
 			{
-				if( this.__mode == Constants.SERVLET_FRAMESET )
+				if(this.__mode == Constants.SERVLET_FRAMESET)
 				{
 					var targetPage = "1";					
 					var bookmark = birtUtility.getURLParameter(soapURL, "bookmark");
 					// if a bookmark is defined, reset the target page
 					// to force the server-side to use it
-					if ( bookmark && bookmark.length > 0 )
+					if (bookmark && bookmark.length > 0)
 					{
 						targetPage = "";
 					}
 					
-					var oPageNumber = $( 'pageNumber' );
-					if ( oPageNumber )
+					var oPageNumber = $('pageNumber');
+					if (oPageNumber)
 					{
 						oPageNumber.innerHTML = targetPage;						
 					}
 					
-					birtEventDispatcher.broadcastEvent( birtEvent.__E_CHANGE_PARAMETER );
+					birtEventDispatcher.broadcastEvent(birtEvent.__E_CHANGE_PARAMETER);
 				}
 				else
 				{
 					// if 'run' mode, fire GetPageAll event
-					this.__init_page_all( );
+					this.__init_page_all();
 				}
 				
-				this.__l_hide( );
+				this.__l_hide();
 			}
 		}
 	},
@@ -1441,10 +1430,10 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	/**
 	 *	Override cancel button click.
 	 */
-	__neh_cancel : function( )
+	__neh_cancel : function()
 	{
 		// if cascading parameter calls are pending
-		if ( this.__pendingCascadingCalls > 0 )
+		if (this.__pendingCascadingCalls > 0)
 		{
 			// prevent the response to popup the dialog again
 			this.__cancelShow = true;
@@ -1453,13 +1442,13 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			this.__pendingCascadingCalls = 0;			
 		}
 		
-		if ( this.__mode == Constants.SERVLET_PARAMETER )
+		if (this.__mode == Constants.SERVLET_PARAMETER)
 		{
 			this.__cancel();
 		}
 		else
 		{
-			this.__l_hide( );
+			this.__l_hide();
 		}
 	},
 
@@ -1468,31 +1457,31 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *
 	 *	@return, void
 	 */
-	__doSubmitWithPattern : function( )
+	__doSubmitWithPattern : function()
 	{
 		var url = soapURL;
 		
 		// parse pattern
-		var reg = new RegExp( "[&|?]{1}__pattern\s*=([^&|^#]*)", "gi" );
-		var arr = url.match( reg );
+		var reg = new RegExp("[&|?]{1}__pattern\s*=([^&|^#]*)", "gi");
+		var arr = url.match(reg);
 		var pattern;
-		if( arr && arr.length > 0 )		
+		if(arr && arr.length > 0)		
 			pattern = RegExp.$1;
 		else
 			pattern = "frameset";
 						
 		// parse target
-		reg = new RegExp( "[&|?]{1}__target\s*=([^&|^#]*)", "gi" );
-		arr = url.match( reg );			
+		reg = new RegExp("[&|?]{1}__target\s*=([^&|^#]*)", "gi");
+		arr = url.match(reg);			
 		var target;
-		if( arr && arr.length > 0 )
+		if(arr && arr.length > 0)
 			target = RegExp.$1;
 		
-		reg = new RegExp( "[^/|^?]*[?]{1}", "gi" );
-		if( url.search( reg ) > -1 )
-			url = url.replace( reg, pattern + "?" );
+		reg = new RegExp("[^/|^?]*[?]{1}", "gi");
+		if(url.search(reg) > -1)
+			url = url.replace(reg, pattern + "?");
 		
-		this.__doSubmit( url, target );
+		this.__doSubmit(url, target);
 	},
 	
 	/**
@@ -1502,36 +1491,36 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *  @param, target
 	 *	@return, void
 	 */
-	__doSubmit : function( url, target )
+	__doSubmit : function(url, target)
 	{
 		var action = url;
-		if( !action )
+		if(!action)
 			action = soapURL;
 		
-		var divObj = document.createElement( "DIV" );
-		document.body.appendChild( divObj );
+		var divObj = document.createElement("DIV");
+		document.body.appendChild(divObj);
 		divObj.style.display = "none";
 		
-		var formObj = document.createElement( "FORM" );
-		divObj.appendChild( formObj );
+		var formObj = document.createElement("FORM");
+		divObj.appendChild(formObj);
 		
-		if ( this.__parameter != null )
+		if (this.__parameter != null)
 		{
-			for( var i = 0; i < this.__parameter.length; i++ )	
+			for(var i = 0; i < this.__parameter.length; i++)	
 			{
-				var param = document.createElement( "INPUT" );
-				formObj.appendChild( param );
+				var param = document.createElement("INPUT");
+				formObj.appendChild(param);
 				param.TYPE = "HIDDEN";
 				param.name = this.__parameter[i].name;
 				param.value = this.__parameter[i].value;
 				
 				//replace the URL parameter			
-				var reg = new RegExp( "&" + param.name + "[^&]*&*", "g" );
-				action = action.replace( reg, "&" );
+				var reg = new RegExp("&" + param.name + "[^&]*&*", "g");
+				action = action.replace(reg, "&");
 			}
 		}
 		
-		if ( Constants.viewingSessionId )
+		if (Constants.viewingSessionId)
 		{
 			// append sub session in the POST part
 			birtUtility.addHiddenFormField(formObj, Constants.PARAM_SESSION_ID, Constants.viewingSessionId);
@@ -1539,24 +1528,24 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 		}
 		
 		// replace __parameterpage setting
-		var reg = new RegExp( "([&|?]{1})(__parameterpage\s*=[^&|^#]*)","gi" );
-		if ( action.search( reg ) > -1 )
+		var reg = new RegExp("([&|?]{1})(__parameterpage\s*=[^&|^#]*)","gi");
+		if (action.search(reg) > -1)
 		{
-			action = action.replace( reg, "$1" );
+			action = action.replace(reg, "$1");
 		}	
 		
 		// set target window
-		if( target )
+		if(target)
 			formObj.target = target;
 			
 		formObj.action = action;
 		formObj.method = "post";
 		
 		// if don't set target, hide the parameter dialog
-		if( !target )		
-			this.__l_hide( );
+		if(!target)		
+			this.__l_hide();
 						
-		formObj.submit( );		
+		formObj.submit();		
 	},
 
 	/**
@@ -1564,12 +1553,12 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *
 	 *	@return, void
 	 */	
-	__close : function( )
+	__close : function()
 	{
-		if ( BrowserUtility.__isIE( ) )
+		if (BrowserUtility.__isIE())
 		{
 			window.opener = null;
-			window.close( );
+			window.close();
 		}
 		else
 		{
@@ -1582,7 +1571,7 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 *
 	 *	@return, void
 	 */	
-	__cancel : function( )
+	__cancel : function()
 	{
 		window.status = "cancel";
 		document.title = "cancel";
@@ -1594,10 +1583,10 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	__preShow: function()
 	{
 		// disable the toolbar buttons
-		birtUtility.setButtonsDisabled ( "toolbar", true );
+		birtUtility.setButtonsDisabled ("toolbar", true);
 		
 		// disable the Navigation Bar buttons
-		birtUtility.setButtonsDisabled ( "navigationBar", true );
+		birtUtility.setButtonsDisabled ("navigationBar", true);
 		
 		// set preVisible
 		this.preVisible = this.visible;
@@ -1608,10 +1597,10 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 */
 	__l_show: function()
 	{
-		if ( !this.__cancelShow )
+		if (!this.__cancelShow)
 		{
 			// call to superclass method
-			AbstractParameterDialog.prototype.__l_show.call( this );
+			AbstractParameterDialog.prototype.__l_show.call(this);
 		}
 		this.__cancelShow = false;
 	},
@@ -1622,31 +1611,31 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	__postShow: function()
 	{	
 		// if previous is visible, return directly
-		if( this.preVisible )	
+		if(this.preVisible)	
 			return;
 				
 		// focus on the first input text/password or select or button control
-		this.__init_focus( );
+		this.__init_focus();
 	},
 	
 	/**
 	 * Try to focus on the first control.
 	 * Input text/password, select and button.
 	 */
-	__init_focus: function( )
+	__init_focus: function()
 	{
 		var oFirstITC;
 		var oFirstIBT;
 		var oFirstST;
 		
-		var oITCs = this.__instance.getElementsByTagName( "input" );
-		for( var i = 0; i < oITCs.length; i++ )
+		var oITCs = this.__instance.getElementsByTagName("input");
+		for(var i = 0; i < oITCs.length; i++)
 		{
 			// get the first input text/password control
-			if( oITCs[i].type == "text" 
-			    || oITCs[i].type == "password"  )
+			if(oITCs[i].type == "text" 
+			    || oITCs[i].type == "password" )
 			{
-				if( !oITCs[i].disabled && !oFirstITC )
+				if(!oITCs[i].disabled && !oFirstITC)
 				{
 					oFirstITC = oITCs[i];
 				}
@@ -1654,87 +1643,87 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 			}
 			
 			// get the first input button control
-			if( !oFirstIBT && oITCs[i].type == "button" && !oITCs[i].disabled )
+			if(!oFirstIBT && oITCs[i].type == "button" && !oITCs[i].disabled)
 			{
 				oFirstIBT = oITCs[i];
 			}
 		}
 		
 		// get the first select control
-		var oSTs = this.__instance.getElementsByTagName( "select" );
-		for( var i = 0; i < oSTs.length; i++ )
+		var oSTs = this.__instance.getElementsByTagName("select");
+		for(var i = 0; i < oSTs.length; i++)
 		{
-			if( !oSTs[i].disabled )
+			if(!oSTs[i].disabled)
 			{
 				oFirstST = oSTs[i];
 				break;
 			}
 		}
 				
-		if( oFirstITC && !oFirstST )
+		if(oFirstITC && !oFirstST)
 		{
 			// if exist input text/password, no select control
-			oFirstITC.focus( );
+			oFirstITC.focus();
 		}
-		else if( !oFirstITC && oFirstST )
+		else if(!oFirstITC && oFirstST)
 		{
 			// if exist select control, no input text/password
-			oFirstST.focus( );
+			oFirstST.focus();
 		}
-		else if( oFirstITC && oFirstST )
+		else if(oFirstITC && oFirstST)
 		{
 			// exist select control and input text/password
 			// compare the parent div offsetTop
-			if( oFirstITC.parentNode && oFirstST.parentNode )
+			if(oFirstITC.parentNode && oFirstST.parentNode)
 			{
 				// Bugzilla 265615: need to use cumulative offset for special cases
 				// where one element is inside a group container
-				var offsetITC = Element.cumulativeOffset( oFirstITC );
-				var offsetST = Element.cumulativeOffset( oFirstST );
+				var offsetITC = Element.cumulativeOffset(oFirstITC);
+				var offsetST = Element.cumulativeOffset(oFirstST);
 				
 				// compare y-offset first, then x-offset to determine the visual order
-				if( ( offsetITC[1] > offsetST[1] ) || ( offsetITC[1] == offsetST[1] && offsetITC[0] > offsetST[0] ) )
+				if((offsetITC[1] > offsetST[1]) || (offsetITC[1] == offsetST[1] && offsetITC[0] > offsetST[0]))
 				{
-					oFirstST.focus( );				
+					oFirstST.focus();				
 				}
 				else
 				{
-					oFirstITC.focus( );
+					oFirstITC.focus();
 				}
 			}
 			else
 			{
 				// default to focus on input control
-				oFirstITC.focus( );
+				oFirstITC.focus();
 			}
 		}
 		else
 		{
 			// focus on button control
-			oFirstIBT.focus( );
+			oFirstIBT.focus();
 		}		
 	},
 		
 	/**
 	Called before element is hidden
 	*/
-	__preHide: function( )
+	__preHide: function()
 	{
 		// enable the toolbar buttons
-		birtUtility.setButtonsDisabled ( "toolbar", false );
+		birtUtility.setButtonsDisabled ("toolbar", false);
 		
 		// enable the Navigation Bar buttons
-		birtUtility.setButtonsDisabled ( "navigationBar", false );		
+		birtUtility.setButtonsDisabled ("navigationBar", false);		
 	},
 	
 	/**
 	 * Retrieve all pages
 	 */
-	__init_page_all: function( )
+	__init_page_all: function()
 	{
-		if( birtParameterDialog.collect_parameter( ) )
+		if(birtParameterDialog.collect_parameter())
 		{
-			birtEventDispatcher.broadcastEvent( birtEvent.__E_GETPAGE_ALL );
+			birtEventDispatcher.broadcastEvent(birtEvent.__E_GETPAGE_ALL);
 		}
 	},
 
@@ -1744,16 +1733,16 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 * @param url
 	 * @return, true or false
 	 */
-	__ifCache: function( url )
+	__ifCache: function(url)
 	{		
-		if( url )
-			url = url.toLowerCase( );
+		if(url)
+			url = url.toLowerCase();
 		else
 			url = "";
 			
 		// if don't set __nocache, default is true
-		var reg = new RegExp( "[&|?]{1}__nocache[^&|^#]*", "gi" );
-		if( url.search( reg ) < 0 )
+		var reg = new RegExp("[&|?]{1}__nocache[^&|^#]*", "gi");
+		if(url.search(reg) < 0)
 			return true;
 		else
 			return false;			
@@ -1767,25 +1756,24 @@ BirtParameterDialog.prototype = Object.extend( new AbstractParameterDialog( ),
 	 * @param url
 	 * @return, true or false
 	 */
-	__ifSubmit: function( mode, url )
+	__ifSubmit: function(mode, url)
 	{
 		// if use '/preview' pattern, submit anyway
-		if( mode == 'preview' )
+		if(mode == 'preview')
 			return true;
 		
-		if( url )
-			url = url.toLowerCase( );
+		if(url)
+			url = url.toLowerCase();
 		else
 			url = "";
 			
 		// if use '/frameset' or '/run', check format.
 		// if format is not HTML, submit request.	
-		if( mode == 'run' || mode == 'frameset' )
+		if(mode == 'run' || mode == 'frameset')
 		{
 			var format = Constants.request.format;
-			return !( format == "htm" || format == "html" );
-		}
-		
+			return !(format == "htm" || format == "html");
+		}		
 		return false;
 	}
 }
