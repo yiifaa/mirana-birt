@@ -19,5 +19,12 @@ birt报表网页预览版
 
 ## 2017-06-23
 1. 删除了无用的jsp.jar
+2. 替换了布局的头部；
+3. 修复了非安全"Connection"-"keep-alive"Bug；
+4. 替换了分页组件；
+5. 为系统添加了中国国际化(国际化文件：src/org/eclipse/birt/report/resource/Messages_zh-CN.properties)
+6. 添加了JSTL支持
+7. 绘制了Birt视图层次，参见Birt视图层次.xmind
+
 
 

@@ -28,6 +28,6 @@ public class DocumentFragment extends BirtBaseFragment
 	protected void build( )
 	{
 		addChild( new ProgressBarFragment( ) );
-		addChild( new TocFragment( ) );		
+		addChild( new TocFragment());		
 	}
 }
