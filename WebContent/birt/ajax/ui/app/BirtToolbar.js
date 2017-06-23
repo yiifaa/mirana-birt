@@ -23,25 +23,24 @@ BirtToolbar.prototype = Object.extend( new AbstractBaseToolbar( ),
 	 *	@data, data DOM tree (schema TBD)
 	 *	@return, void
 	 */
-	__cb_bind : function( data )
-	{
+	__cb_bind : function(data) {
 	},
 
 	/**
 	 *	Install native/birt event handlers.
-	 *
+	 *  注册事件
 	 *	@id, toolbar id (optional since there is only one toolbar)
 	 *	@return, void
 	 */
 	__cb_installEventHandlers : function( )
 	{
-		var actions = document.querySelectorAll('#toolbar .navbar-nav a'),
+		var actions = this.__instance.querySelectorAll('.navbar-nav a'),
 			len = actions.length
 		//var oImgs = this.__instance.getElementsByTagName('INPUT');
 		if(len > 0) {
 			for(var i = 0; i < len; i++) {
 				var item = actions.item(i);
-				Event.observe(item, 'click', this.__neh_click_closure, false );
+				Event.observe(item, 'click', this.__neh_click_closure, false);
 			}
 		}
 		/**
