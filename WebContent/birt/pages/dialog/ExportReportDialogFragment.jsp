@@ -1,112 +1,69 @@
-<%-----------------------------------------------------------------------------
-	Copyright (c) 2004 Actuate Corporation and others.
-	All rights reserved. This program and the accompanying materials 
-	are made available under the terms of the Eclipse Public License v1.0
-	which accompanies this distribution, and is available at
-	http://www.eclipse.org/legal/epl-v10.html
-	
-	Contributors:
-		Actuate Corporation - Initial implementation.
------------------------------------------------------------------------------%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page session="false" buffer="none"%>
 <%@ page import="org.eclipse.birt.report.presentation.aggregation.IFragment,
 				 org.eclipse.birt.report.utility.ParameterAccessor,
 				 org.eclipse.birt.report.resource.BirtResources"%>
-
-<%-----------------------------------------------------------------------------
-	Expected java beans
------------------------------------------------------------------------------%>
 <jsp:useBean id="fragment" type="org.eclipse.birt.report.presentation.aggregation.IFragment" scope="request" />
 
 <%
 	String[] supportedFormats = ParameterAccessor.supportedFormats;
 %>
-<%-----------------------------------------------------------------------------
-	Export report dialog fragment
------------------------------------------------------------------------------%>
-<TABLE CELLSPACING="2" CELLPADDING="2" CLASS="birtviewer_dialog_body">
-	<TR HEIGHT="5px"><TD></TD></TR>
-	<TR>
-		<TD>
-		<label for="exportFormat"><%=BirtResources.getMessage( "birt.viewer.dialog.export.format" )%></label>
-		<SELECT	ID="exportFormat" NAME="format" CLASS="birtviewer_exportreport_dialog_select">
-			<%
-				ParameterAccessor.sortSupportedFormatsByDisplayName(supportedFormats);
-				
-				for ( int i = 0; i < supportedFormats.length; i++ )
-				{
-					if ( !ParameterAccessor.PARAM_FORMAT_HTML.equalsIgnoreCase( supportedFormats[i] ) )
-					{
-			%>
-						<OPTION VALUE="<%= supportedFormats[i] %>"><%= ParameterAccessor.getOutputFormatLabel( supportedFormats[i] ) %></OPTION>
-			<%
-					}
-				}
-			%>
-		</SELECT>
-		</TD>
-	</TR>
-	<TR HEIGHT="5px"><TD></TD></TR>
-	<TR HEIGHT="5px"><TD><HR/></TD></TR>
-	<TR>
-		<TD>
-		<label for="exportPages"><%=BirtResources.getMessage( "birt.viewer.dialog.page" )%></label>
-		</TD>
-	</TR>
-	<TR>
-		<TD>
-			<DIV ID="exportPageSetting">
-				<TABLE>
-					<TR>
-						<TD>
-							<INPUT TYPE="radio" ID="exportPageAll" NAME="exportPages" CHECKED/>
-							<label for="exportPageAll"><%=BirtResources.getHtmlMessage( "birt.viewer.dialog.page.all" )%></label>
-						</TD>
-						<TD STYLE="padding-left:5px">	
-							<INPUT TYPE="radio" ID="exportPageCurrent" NAME="exportPages"/>
-							<label for="exportPageCurrent"><%=BirtResources.getHtmlMessage( "birt.viewer.dialog.page.current" )%></label>
-						</TD>	
-						<TD STYLE="padding-left:5px">
-							<INPUT TYPE="radio" ID="exportPageRange" NAME="exportPages"/>
-							<label for="exportPageRange"><%=BirtResources.getHtmlMessage( "birt.viewer.dialog.page.range" )%></label>
-							<INPUT TYPE="text" CLASS="birtviewer_exportreport_dialog_input" ID="exportPageRange_input" DISABLED="true"/>
-						</TD>
-					</TR>		
-				</TABLE>
-			</DIV>
-		</TD>
-	</TR>
-	<TR>
-		<TD>&nbsp;&nbsp;<%=BirtResources.getHtmlMessage( "birt.viewer.dialog.page.range.description" )%></TD>
-	</TR>
-	<TR HEIGHT="5px"><TD><HR/></TD></TR>
-	<TR>
-		<TD>
-			<DIV ID="exportFitSetting">
-				<TABLE>
-					<TR>
-						<TD>
-							<label for="exportFitToAuto"><%=BirtResources.getHtmlMessage( "birt.viewer.dialog.export.pdf.fitto" )%></label>
-						</TD>
-					</TR>
-					<TR>
-						<TD>
-							<INPUT TYPE="radio" ID="exportFitToAuto" NAME="exportFit" CHECKED/>
-							<label for="exportFitToAuto"><%=BirtResources.getHtmlMessage( "birt.viewer.dialog.export.pdf.fittoauto" )%></label>
-						</TD>
-						<TD>
-							<INPUT TYPE="radio" ID="exportFitToActual" NAME="exportFit"/>
-							<label for="exportFitToActual"><%=BirtResources.getHtmlMessage( "birt.viewer.dialog.export.pdf.fittoactual" )%></label>
-						</TD>
-						<TD STYLE="padding-left:5px">	
-							<INPUT TYPE="radio" ID="exportFitToWhole" NAME="exportFit"/>
-							<label for="exportFitToWhole"><%=BirtResources.getHtmlMessage( "birt.viewer.dialog.export.pdf.fittowhole" )%></label>
-						</TD>
-					</TR>
-				</TABLE>			
-			</DIV>			
-		</TD>
-	</TR>
-	<TR HEIGHT="5px"><TD></TD></TR>
-</TABLE>
+<div class="row">
+	<div class="col-sm-10 col-sm-offset-1">
+		<div class="form-horizontal">
+			<div class="form-group">
+		    	<label for="exportFormat" class="col-sm-4 control-label"><%=BirtResources.getMessage("birt.viewer.dialog.export.format")%></label>
+			    <div class="col-sm-8">
+			    	<select class="form-control" id="exportFormat" name="exportFormat">
+			    		<%
+							ParameterAccessor.sortSupportedFormatsByDisplayName(supportedFormats);
+			    			for(int i = 0; i < supportedFormats.length; i++) {
+			    				if (!ParameterAccessor.PARAM_FORMAT_HTML.equalsIgnoreCase(supportedFormats[i])) {
+		    			%>
+		    			<option value="<%=supportedFormats[i]%>"><%=ParameterAccessor.getOutputFormatLabel(supportedFormats[i])%></option>
+		    			<%
+							}
+						}
+						%>
+			    	</select>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+		  		<label for="exportFormat" class="col-sm-4 control-label"><%=BirtResources.getMessage("birt.viewer.dialog.page")%></label>
+			    <div class="col-sm-8" id="exportPageSetting">
+					<label class="checkbox-inline">
+						<input type="checkbox" id="exportPageAll" name="exportPages" checked>
+						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.page.all")%>
+					</label>
+					<label class="checkbox-inline">
+						<input type="checkbox" id="exportPageCurrent" name="exportPages">
+						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.page.current")%>
+					</label>
+					<label class="checkbox-inline" style="display:none;">
+						<input type="checkbox" id="exportPageRange" name="exportPages">
+						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.page.range")%>
+						<input type="text" id="exportPageRange_input" class="form-control" style="display:inline-block;width:150px;" name="exportPages" disabled="disabled">
+					</label>
+				</div>
+		  	</div>
+		  	
+		  	<div class="form-group" id="exportFitSetting">
+		  		<label for="exportFormat" class="col-sm-4 control-label"><%=BirtResources.getMessage("birt.viewer.dialog.export.pdf.fitto")%></label>
+			    <div class="col-sm-8">
+					<label class="checkbox-inline">
+						<input type="checkbox" id="exportFitToAuto" name="exportFit" checked>
+						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.export.pdf.fittoauto")%>
+					</label>
+					<label class="checkbox-inline">
+						<input type="checkbox" id="exportFitToActual" name="exportFit">
+						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.export.pdf.fittoactual")%>
+					</label>
+					<label class="checkbox-inline">
+						<input type="checkbox" id="exportFitToWhole" name="exportFit">
+						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.export.pdf.fittowhole")%>
+					</label>
+				</div>
+		  	</div>
+		</div>
+	</div>
+</div>

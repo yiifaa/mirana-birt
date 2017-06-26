@@ -2,20 +2,34 @@
  *	Dialog base class
  */
 AbstractBaseDialog = function(){};
+//	添加Dialog实例监控
+var Dialogs = {};
 
 AbstractBaseDialog.prototype =
 {		
-	contentHolderWidth: 500, //TODO - move to display constants? Default width in pixels
+	contentHolderWidth: 500, 
+	//TODO - move to display constants? Default width in pixels
 	visible: null, //Is the dialog currently visible		
+	
 	__operationCancelled: false,
+	
 	__allowSelection: false,
 	 
 	/**
 	 Initialize dialog base
 	 */
-	__initBase: function(htmlId, contentWidth)
-	{
+	__initBase: function(htmlId, contentWidth) {
 		this.__instance = $(htmlId);
+		//	初始化Dialog
+		this.__view = jQuery(document.getElementById(htmlId));
+		this.__view.modal({
+			keyboard: false,
+			backdrop: 'static',
+			show: false
+		})
+		//	记录所有的对话框
+		Dialogs[htmlId] = this;
+		//
 		this.htmlId = htmlId;
 		this.visible = false;
 		
@@ -26,8 +40,10 @@ AbstractBaseDialog.prototype =
 		
 		//Instance is given a location within screen to avoid
 		//extra scroll bar creation
+		/**
 		this.__instance.style.top = '0px';
 		this.__instance.style.left = '0px';
+		**/
 		
 		//Sizing
 		this.contentHolderName = htmlId + "dialogContentContainer";
@@ -64,7 +80,7 @@ AbstractBaseDialog.prototype =
 	__base_installEventHandlers : function( id )
 	{
 		//Initialize iframe
-		this.__iframe = $(id + "iframe");
+		//	this.__iframe = $(id + "iframe");
 		
 		// Close button
 		var closeBtn = $(id + "dialogCloseBtn");
@@ -151,13 +167,20 @@ AbstractBaseDialog.prototype =
 	 *	@event, incoming browser native event
 	 *	@return, void
 	 */
-	__l_show : function( )
-	{
+	__l_show : function() {
+		//	隐藏其他对话框
+		for(var prop in Dialogs) {
+			if(Dialogs[prop] !== this) {
+				//	隐藏其他对话框
+				Dialogs[prop].__l_hide();
+			}
+		}
 		// reset cancelled flag
 		this.__operationCancelled = false;
 		this.__preShow();
 			
 				//check if the dialog is already shown
+		/**
 		if(!this.visible)
 		{
 			var zIndex = Mask.show(); 
@@ -166,13 +189,6 @@ AbstractBaseDialog.prototype =
 					
 			Element.show( this.__instance );
 			this.visible = true;
-			
-			//workaround for Mozilla bug https://bugzilla.mozilla.org/show_bug.cgi?id=167801
-			if(BrowserUtility.useIFrame())
-			{
-				//show iframe under dialog
-				Element.show( this.__iframe );
-			}
 			
 			this.__setWidth();
 				
@@ -201,7 +217,11 @@ AbstractBaseDialog.prototype =
 			Event.observe( window, 'resize', this.__neh_resize_closure, false );
 			Event.observe( document, 'mouseup', this.disposeSelection_closure, false );			
 		}
-		
+		**/
+		if(!this.visible) {
+			this.__view.modal('show');
+			this.visible = true;
+		}
 		this.__postShow();	
 	},
 	
@@ -209,9 +229,8 @@ AbstractBaseDialog.prototype =
 	/**
 	Called right before element is shown
 	*/
-	__preShow: function()
-	{
-		//implementation is left to extending class
+	__preShow: function() {
+		
 	},
 	
 	/**
@@ -231,18 +250,22 @@ AbstractBaseDialog.prototype =
 	__l_hide : function( )
 	{
 		this.__preHide();
+		this.__view.modal('hide');
+		/**
 		Event.stopObserving( window, 'resize', this.__neh_resize_closure, false );
 		Event.stopObserving( document, 'mouseup', this.disposeSelection_closure, false );
-		[ this.__instance, this.__iframe ].each( Element.hide );
-		this.visible = false;
+		[this.__instance].each(Element.hide);
 		Mask.hide();
+		**/
+		//	[this.__instance, this.__iframe].each( Element.hide );
+		this.visible = false;
+		
 	},
 		
 	/**
 	Called before element is hidden
 	*/
-	__preHide: function()
-	{
+	__preHide: function() {
 		//implementation is left to extending class
 	},
 	
@@ -424,17 +447,15 @@ AbstractBaseDialog.prototype =
 		contentHolder.style.width = this.contentHolderWidth + 'px';
 		var newOuterWidth = contentHolder.offsetWidth + difference;
 		this.__instance.style.width = newOuterWidth + 'px';
-			
+		
+		/**
 		this.__iframe.style.width = this.__instance.offsetWidth + 'px';
 		this.__iframe.style.height = this.__instance.offsetHeight + 'px';
-		
-		//move iframe to true top, left
-		//assumes that top/bottom left/right borders are same width
-		if(this.__iframe.clientWidth > 0)
-		{
+		if(this.__iframe.clientWidth > 0) {
 			this.__iframe.style.top = (this.__instance.clientHeight - this.__instance.offsetHeight)/2 + 'px';
 			this.__iframe.style.left = (this.__instance.clientWidth - this.__instance.offsetWidth)/2 + 'px';
 		}
+		**/
 	},
 	
 	/**

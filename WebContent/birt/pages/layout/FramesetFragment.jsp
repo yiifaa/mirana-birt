@@ -12,7 +12,6 @@
 <jsp:useBean id="attributeBean" type="org.eclipse.birt.report.context.BaseAttributeBean" scope="request" />
 
 <%
-	// base href can be defined in config file for deployment.
 	String baseHref = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 	if(!attributeBean.isDesigner())
 	{
@@ -35,7 +34,6 @@
 			<link rel="stylesheet" href="<c:url value='/birt/styles/dialogbase.css'/>" media="all" />
 		</c:if>
 		<link rel="stylesheet" href="<c:url value='/statics/css/bootstrap.css'/>" media="all" />
-		
 		<script>
 			var soapURL = '${SoapURL}',
 				rtl = ${attributeBean.isRtl()};
@@ -44,6 +42,7 @@
 			}
 			<c:out value="${attributeBean.getClientInitialize()}"/>
 		</script>
+		
 		<!-- 引入JS文件 -->
 		<script src="<c:url value='/birt/ajax/utility/Debug.js'/>" type="text/javascript"></script>
 		<script src="<c:url value='/birt/ajax/lib/prototype.js'/>" type="text/javascript"></script>
@@ -176,8 +175,6 @@
 		// register the base elements to the mask, so their input
 		// will be disabled when a dialog is popped up.
 		Mask.setBaseElements(new Array(birtToolbar.__instance, navigationBar.__instance, birtReportDocument.__instance));
-		
-		
 		
 		
 		// When link to internal bookmark, use javascript to fire an Ajax request

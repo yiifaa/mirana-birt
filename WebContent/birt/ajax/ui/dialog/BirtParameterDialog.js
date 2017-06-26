@@ -325,11 +325,10 @@ BirtParameterDialog.prototype = Object.extend(new AbstractParameterDialog(),
 				
 		var k = 0;
 		//oTRC[i] is <tr></tr> section
-		var oTRC = document.getElementById("parameter_table").getElementsByTagName("TR");
-		for(var i = 0; i < oTRC.length; i++)
-		{
-			if(!this.__parameter[k])
-			{
+		//var oTRC = document.getElementById("parameter_table").getElementsByTagName("TR");
+		var oTRC = document.getElementById("parameter_table").querySelectorAll('div.form-group');
+		for(var i = 0; i < oTRC.length; i++) {
+			if(!this.__parameter[k]) {
 				this.__parameter[k] = { };
 			}
 			
