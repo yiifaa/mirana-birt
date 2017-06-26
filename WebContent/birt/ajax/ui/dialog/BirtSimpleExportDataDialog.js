@@ -1,13 +1,3 @@
-/******************************************************************************
- *	Copyright (c) 2004 Actuate Corporation and others.
- *	All rights reserved. This program and the accompanying materials 
- *	are made available under the terms of the Eclipse Public License v1.0
- *	which accompanies this distribution, and is available at
- *		http://www.eclipse.org/legal/epl-v10.html
- *	
- *	Contributors:
- *		Actuate Corporation - Initial implementation.
- *****************************************************************************/
  
 /**
  *	Birt export data dialog.
@@ -55,9 +45,13 @@ BirtSimpleExportDataDialog.prototype = Object.extend( new AbstractBaseDialog( ),
 		
 		// Initialize exchange buttons
 		var oInputs = this.__instance.getElementsByTagName( 'input' );
-		for ( var i = 0; i < oInputs.length ; i++ )
-		{
+		for ( var i = 0; i < oInputs.length ; i++ ) {
 			Event.observe( oInputs[i], 'click', this.__neh_click_exchange_closure, false );
+		}
+		
+		var oButtons = this.__instance.getElementsByTagName('button');
+		for(var i = 0; i < oButtons.length; i ++) {
+			Event.observe(oButtons[i], 'click', this.__neh_click_exchange_closure, false );
 		}
 		
 		// Initialize exchange selects
@@ -76,23 +70,21 @@ BirtSimpleExportDataDialog.prototype = Object.extend( new AbstractBaseDialog( ),
 	 */
 	__neh_click_exchange : function( event )
 	{	
-		var oSC = Event.element( event );
-		if( oSC.id == 'exportDataEncoding_other' )
-		{
+		var oSC = Event.element(event);
+		if(oSC.id == 'exportDataEncoding_other' ) {
 			this.__updateButtons( );
-			$( 'exportDataOtherEncoding_input' ).focus( );
+			$('exportDataOtherEncoding_input').focus( );
 		}
-		else
-		{	
+		else {	
 			var oInputs = this.__instance.getElementsByTagName( 'input' );
 			var oSelects = this.__instance.getElementsByTagName( 'select' );
-			
-			switch ( Event.element( event ).name )
-			{
-				case 'Addall':
-				{
-					if ( oSelects[1].options.length  > 0 )
-					{
+			//	如果是子节点
+			if(oSC.hasClassName('glyphicon')) {
+				oSC = oSC.parentElement;
+			}
+			switch (oSC.name) {
+				case 'Addall': {
+					if ( oSelects[1].options.length  > 0 ) {
 						this.moveAllItems( oSelects[1], oSelects[2] );
 					}
 					break;
@@ -195,52 +187,13 @@ BirtSimpleExportDataDialog.prototype = Object.extend( new AbstractBaseDialog( ),
 		var srcSelectedIndex = oSelects[1].selectedIndex;
 		var destSelectedIndex = oSelects[2].selectedIndex;
 
-		var oInputs = this.__instance.getElementsByTagName( 'input' );
+		var oInputs = this.__instance.getElementsByTagName('button');
 		
-		if( !rtl )
-		{
-			oInputs[0].src = canAdd ? "birt/images/AddAll.gif" : "birt/images/AddAll_disabled.gif";
-		}
-		else
-		{
-			oInputs[0].src = canAdd ? "birt/images/AddAll_rtl.gif" : "birt/images/AddAll_disabled_rtl.gif";
-		}
 		oInputs[0].style.cursor = canAdd ? "pointer" : "default";
-		
-		if( !rtl )
-		{
-			oInputs[1].src = canAdd && srcSelectedIndex >= 0 ? "birt/images/Add.gif" : "birt/images/Add_disabled.gif";
-		}
-		else
-		{
-			oInputs[1].src = canAdd && srcSelectedIndex >= 0 ? "birt/images/Add_rtl.gif" : "birt/images/Add_disabled_rtl.gif";
-		}	
 		oInputs[1].style.cursor = canAdd ? "pointer" : "default";
-		
-		if( !rtl )
-		{ 
-			oInputs[2].src = canRemove && destSelectedIndex >= 0 ? "birt/images/Remove.gif" : "birt/images/Remove_disabled.gif";
-		}
-		else
-		{
-			oInputs[2].src = canRemove && destSelectedIndex >= 0 ? "birt/images/Remove_rtl.gif" : "birt/images/Remove_disabled_rtl.gif";
-		}	
 		oInputs[2].style.cursor = canRemove ? "pointer" : "default";
-
-		if( !rtl )
-		{
-			oInputs[3].src = canRemove ? "birt/images/RemoveAll.gif" : "birt/images/RemoveAll_disabled.gif";
-		}
-		else
-		{
-			oInputs[3].src = canRemove ? "birt/images/RemoveAll_rtl.gif" : "birt/images/RemoveAll_disabled_rtl.gif";
-		}
 		oInputs[3].style.cursor = canRemove ? "pointer" : "default";
-
-		oInputs[4].src = canRemove && destSelectedIndex >= 0 ? "birt/images/Up.gif" : "birt/images/Up_disabled.gif";
 		oInputs[4].style.cursor = canRemove ? "pointer" : "default";
-
-		oInputs[5].src = canRemove && destSelectedIndex >= 0 ? "birt/images/Down.gif" : "birt/images/Down_disabled.gif";
 		oInputs[5].style.cursor = canRemove ? "pointer" : "default";
 		
 		if( canExport )
@@ -261,7 +214,7 @@ BirtSimpleExportDataDialog.prototype = Object.extend( new AbstractBaseDialog( ),
 		}
 		else
 		{
-			this.__setDisabled( 'exportDataEncodingSetting', true );
+			this.__setDisabled('exportDataEncodingSetting', true );
 			$( 'exportDataCSVSeparator' ).disabled = true;
 		}
 	},

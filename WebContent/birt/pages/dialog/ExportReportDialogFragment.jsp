@@ -31,16 +31,16 @@
 		  	<div class="form-group">
 		  		<label for="exportFormat" class="col-sm-4 control-label"><%=BirtResources.getMessage("birt.viewer.dialog.page")%></label>
 			    <div class="col-sm-8" id="exportPageSetting">
-					<label class="checkbox-inline">
-						<input type="checkbox" id="exportPageAll" name="exportPages" checked>
+					<label class="radio-inline">
+						<input type="radio" id="exportPageAll" name="exportPages" checked>
 						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.page.all")%>
 					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" id="exportPageCurrent" name="exportPages">
+					<label class="radio-inline">
+						<input type="radio" id="exportPageCurrent" name="exportPages">
 						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.page.current")%>
 					</label>
-					<label class="checkbox-inline" style="display:none;">
-						<input type="checkbox" id="exportPageRange" name="exportPages">
+					<label class="radio-inline" style="display:none;">
+						<input type="radio" id="exportPageRange" name="exportPages">
 						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.page.range")%>
 						<input type="text" id="exportPageRange_input" class="form-control" style="display:inline-block;width:150px;" name="exportPages" disabled="disabled">
 					</label>
@@ -50,16 +50,16 @@
 		  	<div class="form-group" id="exportFitSetting">
 		  		<label for="exportFormat" class="col-sm-4 control-label"><%=BirtResources.getMessage("birt.viewer.dialog.export.pdf.fitto")%></label>
 			    <div class="col-sm-8">
-					<label class="checkbox-inline">
-						<input type="checkbox" id="exportFitToAuto" name="exportFit" checked>
+					<label class="radio-inline">
+						<input type="radio" id="exportFitToAuto" name="exportFit" checked>
 						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.export.pdf.fittoauto")%>
 					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" id="exportFitToActual" name="exportFit">
+					<label class="radio-inline">
+						<input type="radio" id="exportFitToActual" name="exportFit">
 						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.export.pdf.fittoactual")%>
 					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" id="exportFitToWhole" name="exportFit">
+					<label class="radio-inline">
+						<input type="radio" id="exportFitToWhole" name="exportFit">
 						<%=BirtResources.getHtmlMessage("birt.viewer.dialog.export.pdf.fittowhole")%>
 					</label>
 				</div>

@@ -2,70 +2,49 @@
 <%@ page session="false" buffer="none"%>
 <%@ page import="org.eclipse.birt.report.presentation.aggregation.IFragment,
 				 org.eclipse.birt.report.resource.BirtResources"%>
-
-<%-----------------------------------------------------------------------------
-	Expected java beans
------------------------------------------------------------------------------%>
 <jsp:useBean id="fragment" type="org.eclipse.birt.report.presentation.aggregation.IFragment" scope="request" />
 
-<%-----------------------------------------------------------------------------
-	Print report dialog fragment
------------------------------------------------------------------------------%>
-<TABLE CELLSPACING="2" CELLPADDING="2" CLASS="birtviewer_dialog_body">
-	<TR HEIGHT="5px"><TD></TD></TR>
-	<TR>
-		<TD>
-			<DIV ID="printFormatSetting">
-				<DIV><label for="printAsHTML"><%=BirtResources.getMessage( "birt.viewer.dialog.print.format" )%></label></DIV>
-				<br/>
-				<DIV>
-					<INPUT TYPE="radio" ID="printAsHTML" name="printFormat" CHECKED />
-					<label for="printAsHTML"><%=BirtResources.getMessage( "birt.viewer.dialog.print.format.html" )%></label>
-				</DIV>
-				<DIV>
-					<INPUT TYPE="radio" ID="printAsPDF" name="printFormat" />
-					<label for="printAsPDF"><%=BirtResources.getMessage( "birt.viewer.dialog.print.format.pdf" )%></label>
-				&nbsp;&nbsp;
-				<SELECT	ID="printFitSetting" CLASS="birtviewer_printreport_dialog_select" DISABLED="true">
-					<option value="0" selected><%=BirtResources.getMessage( "birt.viewer.dialog.export.pdf.fittoauto" )%></option>
-					<option value="1"><%=BirtResources.getMessage( "birt.viewer.dialog.export.pdf.fittoactual" )%></option>
-					<option value="2"><%=BirtResources.getMessage( "birt.viewer.dialog.export.pdf.fittowhole" )%></option>
-				</SELECT>
-				</DIV>
-			</DIV>
-		</TD>
-	</TR>
-	<TR HEIGHT="5px"><TD><HR/></TD></TR>
-	<TR>
-		<TD>
-			<DIV ID="printPageSetting">
-				<TABLE>
-					<TR>
-						<TD>
-						<label for="exportPages"><%=BirtResources.getMessage( "birt.viewer.dialog.page" )%></label>
-						</TD>
-					</TR>
-					<TR>
-						<TD>
-							<INPUT TYPE="radio" ID="printPageAll" NAME="printPages" CHECKED/>
-							<label for="printPageAll"><%=BirtResources.getMessage( "birt.viewer.dialog.page.all" )%></label>
-						</TD>
-						<TD STYLE="padding-left:5px">	
-							<INPUT TYPE="radio" ID="printPageCurrent" NAME="printPages"/>
-							<label for="printPageCurrent"><%=BirtResources.getMessage( "birt.viewer.dialog.page.current" )%></label>
-						</TD>	
-						<TD STYLE="padding-left:5px">
-							<INPUT TYPE="radio" ID="printPageRange" NAME="printPages"/>
-							<label for="printPageRange"><%=BirtResources.getMessage( "birt.viewer.dialog.page.range" )%></label>
-							<INPUT TYPE="text" CLASS="birtviewer_printreport_dialog_input" ID="printPageRange_input" DISABLED="true"/>
-						</TD>
-					</TR>		
-				</TABLE>
-			</DIV>
-		</TD>
-	</TR>
-	<TR>
-		<TD>&nbsp;&nbsp;<%=BirtResources.getMessage( "birt.viewer.dialog.page.range.description" )%></TD>
-	</TR>
-	<TR HEIGHT="5px"><TD></TD></TR>
-</TABLE>
+
+<div class="row">
+	<div class="col-sm-10 col-sm-offset-1">
+		<div class="form-horizontal">
+				<div class="form-group" id="printFormatSetting">
+					<label for="printAsHTML" class="col-sm-4 control-label"><%=BirtResources.getMessage("birt.viewer.dialog.print.format")%></label>
+				    <div class="col-sm-8">
+						<div class="radio">
+							<label> 
+								<input type="radio" name="printFormat" id="printAsHTML" checked>
+								<%=BirtResources.getMessage("birt.viewer.dialog.print.format.html")%>
+							</label>
+						</div>
+						<div>
+							<label> 
+								<input type="radio" name="printFormat" id="printAsPDF">
+								<%=BirtResources.getMessage("birt.viewer.dialog.print.format.pdf")%>
+							</label>
+							<SELECT	ID="printFitSetting" CLASS="form-control" DISABLED="true" style="display:inline-block;width:auto;">
+								<option value="0" selected><%=BirtResources.getMessage( "birt.viewer.dialog.export.pdf.fittoauto" )%></option>
+								<option value="1"><%=BirtResources.getMessage( "birt.viewer.dialog.export.pdf.fittoactual" )%></option>
+								<option value="2"><%=BirtResources.getMessage( "birt.viewer.dialog.export.pdf.fittowhole" )%></option>
+							</SELECT>
+						</div>
+					</div>
+				</div>
+			
+				<div class="form-group" id="printPageSetting">
+					<label for="exportPages" class="col-sm-4 control-label"><%=BirtResources.getMessage("birt.viewer.dialog.page")%></label>
+				    <div class="col-sm-8">
+				    	<label class="radio-inline">
+							<input type="radio" name="printPages" id="printPageAll" checked>
+							<%=BirtResources.getMessage("birt.viewer.dialog.page.all")%>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="printPages" id="printPageCurrent">
+							<%=BirtResources.getMessage("birt.viewer.dialog.page.current")%>
+						</label>
+						<INPUT TYPE="hidden" CLASS="birtviewer_printreport_dialog_input" ID="printPageRange_input" DISABLED="true"/>
+					</div>
+				</div>				
+		</div>
+	</div>
+</div>
