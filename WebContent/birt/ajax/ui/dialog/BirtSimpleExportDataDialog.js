@@ -441,17 +441,18 @@ BirtSimpleExportDataDialog.prototype = Object.extend( new AbstractBaseDialog( ),
 			hiddenForm.appendChild( hiddenExtension );			
 		}
 		
-		// Pass the export data encoding		
-		var oUTF8 = $( 'exportDataEncoding_UTF8' );
+		// Pass the export data encoding
+		//	添加GBK支持
+		var oUTF8 = $('exportDataEncoding_UTF8'),
+			oGBK = $('exportDataEncoding_GBK');
 		var hiddenEnc = document.createElement( 'input' );
 		hiddenEnc.type = 'hidden';
 		hiddenEnc.name = Constants.PARAM_EXPORT_ENCODING;
-		if( oUTF8 && oUTF8.checked )
-		{
+		if(oUTF8 && oUTF8.checked) {
 			hiddenEnc.value = oUTF8.value;
-		}
-		else
-		{
+		} else if(oGBK && oGBK.checked) {
+			hiddenEnc.value = oGBK.value;
+		} else {
 			hiddenEnc.value = $('exportDataOtherEncoding_input').value;
 		}
 		hiddenForm.appendChild( hiddenEnc );

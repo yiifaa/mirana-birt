@@ -92,13 +92,18 @@
 		  	</div>	
 		  	
 		  		
-			<div class="form-group" id="exportDataEncodingSetting" style="display:none;">
+			<div class="form-group" id="exportDataEncodingSetting">
 		    	<label for="exportDataEncoding_UTF8" class="col-sm-4 control-label"><%=BirtResources.getMessage("birt.viewer.dialog.exportdata.encoding")%></label>
 			    <div class="col-sm-8">
 			    	<label class="radio-inline">
 						<input type="radio" name="exportDataEncoding" id="exportDataEncoding_UTF8" checked value="UTF-8">
 						UTF-8
 					</label>
+					<label class="radio-inline">
+						<input type="radio" name="exportDataEncoding" id="exportDataEncoding_GBK" value="GBK">
+						GBK
+					</label>
+					
 					<label class="radio-inline" style="display:none;">
 						<input type="radio" name="exportDataEncoding" id="exportDataEncoding_other">
 						<%=BirtResources.getMessage("birt.viewer.dialog.exportdata.encoding.other")%>
