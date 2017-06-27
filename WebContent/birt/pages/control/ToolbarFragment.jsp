@@ -46,7 +46,7 @@
 	          	<div class="input-group">
 			      <input type="number" style="width:120px;" class="form-control" maxlength="4" id="gotoPage" placeholder="跳转到……">
 			      <span class="input-group-btn">
-			        <button class="btn btn-primary" type="button">
+			        <button class="btn btn-primary" type="button" name="goto" id="btnGoto">
 			        	<span class="glyphicon glyphicon-play"></span>
 			        </button>
 			      </span>

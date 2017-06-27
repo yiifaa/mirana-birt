@@ -480,9 +480,10 @@ from T_CONFIGS_HOST]]></xml-property>
             <column id="55"/>
             <header>
                 <row id="47">
+                    <property name="height">0.1875in</property>
                     <cell id="48">
                         <label id="49">
-                            <text-property name="text">hostName</text-property>
+                            <text-property name="text">主机名称</text-property>
                         </label>
                     </cell>
                 </row>
@@ -499,6 +500,59 @@ from T_CONFIGS_HOST]]></xml-property>
             <footer>
                 <row id="53">
                     <cell id="54"/>
+                </row>
+            </footer>
+        </table>
+        <table id="56">
+            <property name="dataSet">Hosts</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">hostName</property>
+                    <text-property name="displayName">主机名</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["hostName"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">cpuModel</property>
+                    <text-property name="displayName">核心模式</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["cpuModel"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="70"/>
+            <column id="71"/>
+            <header>
+                <row id="57">
+                    <cell id="58">
+                        <label id="59">
+                            <text-property name="text">主机名称</text-property>
+                        </label>
+                    </cell>
+                    <cell id="60">
+                        <label id="61">
+                            <text-property name="text">CPU型号</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="62">
+                    <cell id="63">
+                        <data id="64">
+                            <property name="resultSetColumn">hostName</property>
+                        </data>
+                    </cell>
+                    <cell id="65">
+                        <data id="66">
+                            <property name="resultSetColumn">cpuModel</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="67">
+                    <cell id="68"/>
+                    <cell id="69"/>
                 </row>
             </footer>
         </table>

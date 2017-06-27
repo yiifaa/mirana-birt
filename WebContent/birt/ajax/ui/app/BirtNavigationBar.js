@@ -1,14 +1,3 @@
-/******************************************************************************
- *	Copyright (c) 2004 Actuate Corporation and others.
- *	All rights reserved. This program and the accompanying materials 
- *	are made available under the terms of the Eclipse Public License v1.0
- *	which accompanies this distribution, and is available at
- *		http://www.eclipse.org/legal/epl-v10.html
- *	
- *	Contributors:
- *		Actuate Corporation - Initial implementation.
- *****************************************************************************/
- 
 /**
  *	BirtNavigationBar
  *	...
@@ -130,6 +119,11 @@ BirtNavigationBar.prototype = Object.extend(new AbstractUIComponent(),
 		// Observe "keydown" event
 		this.keydown_closure = this.__neh_keydown.bindAsEventListener(this);
 		Event.observe($('gotoPage'), 'keydown', this.keydown_closure, false);
+		//	注册分页按钮
+		var _this = this;
+		jQuery('#btnGoto').on('click', function() {
+			_this.__gotoGage();
+		});
 	},
 
 	/**
