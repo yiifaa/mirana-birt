@@ -4,17 +4,18 @@
 				 org.eclipse.birt.report.context.BaseAttributeBean,
 				 org.eclipse.birt.report.context.ScalarParameterBean" %>
 <jsp:useBean id="attributeBean" type="org.eclipse.birt.report.context.BaseAttributeBean" scope="request" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	ScalarParameterBean parameterBean = ( ScalarParameterBean ) attributeBean.getParameterBean( );
+	ScalarParameterBean parameterBean = (ScalarParameterBean) attributeBean.getParameterBean( );
 	String encodedParameterName = ParameterAccessor.htmlEncode( parameterBean.getName( ) );
 %>
 <div class="form-group">
-   	<label for="<%= encodedParameterName %>" class="col-sm-4 control-label">
+   	<label for="${encodedParameterName}" class="col-sm-4 control-label">
    		<%=parameterBean.getDisplayName() != null ? parameterBean.getDisplayName() : parameterBean.getToolTip() %>
    		
-   		<% if (parameterBean.isRequired()) {%>
-			<FONT COLOR="red">*</FONT>
-		<%}%>
+   		<c:if test="${parameterBean.isRequired()}">
+   			<FONT COLOR="red">*</FONT>
+   		</c:if>
    	</label>
     <div class="col-sm-8">
     	<input type="hidden" id="control_type" value="text"/>
@@ -24,12 +25,12 @@
 			if(!parameterBean.isRequired()) {
 		%>
 		<label class="radio-inline" for="<%= encodedParameterName + "_radio_notnull" %>">
-			<input type="radio" id="<%= encodedParameterName + "_radio_notnull" %>" value="<%=encodedParameterName%>" <%=(parameterBean.getValue() != null)? "checked" : "" %>/>
+			<input type="radio" name="<%=encodedParameterName + "_radio"%>" id="<%= encodedParameterName + "_radio_notnull" %>" value="<%=encodedParameterName%>" <%=(parameterBean.getValue() != null)? "checked" : "" %>/>
 			请输入
 		</label>
 		<%}%>	
 		<INPUT CLASS="form-control" style="display:inline-block;width:auto;"
-			TYPE="<%= parameterBean.isValueConcealed( )? "PASSWORD" : "TEXT" %>"
+			TYPE="<%= parameterBean.isValueConcealed()? "PASSWORD" : "TEXT" %>"
 			NAME="<%= encodedParameterName %>"
 			ID="<%= encodedParameterName %>" 
 			TITLE="<%= parameterBean.getToolTip( ) %>"
@@ -45,17 +46,16 @@
 		
 		<INPUT TYPE="HIDDEN"
 			ID="<%= encodedParameterName + "_displayText" %>"
-			VALUE="<%= ParameterAccessor.htmlEncode( ( parameterBean.getDisplayText( ) == null )? "" : parameterBean.getDisplayText( ) ) %>"
+			VALUE="<%= ParameterAccessor.htmlEncode((parameterBean.getDisplayText() == null )? "" : parameterBean.getDisplayText( ) ) %>"
 			>
-<%
-	if ( !parameterBean.isRequired()) {
-%>
-	<label class="radio-inline" for="<%= encodedParameterName + "_radio_null" %>">
-		<input type="radio" id="<%= encodedParameterName + "_radio_null" %>" value="<%=encodedParameterName%>" <%=(parameterBean.getValue() != null)? "checked" : "" %>/>
-		默认值
-	</label>
-<%
-}
-%>	<input type="hidden" id="isRequired" value="<%=parameterBean.isRequired()? "true": "false"%>"/>
+			
+		<c:if test="${!parameterBean.isRequired()}">
+			<label class="radio-inline" for="<%= encodedParameterName + "_radio_null" %>">
+				<input name="<%=encodedParameterName + "_radio"%>" type="radio" id="<%= encodedParameterName + "_radio_null" %>" value="<%=encodedParameterName%>" ${empty parameterBean.getValue()?"checked" : ""}/>
+				设置为空
+			</label>
+		</c:if>
+		<input type="hidden" id="isRequired" value="<%=parameterBean.isRequired()? "true": "false"%>"/>
+		
     </div>
 </div>

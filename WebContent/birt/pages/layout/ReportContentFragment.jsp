@@ -16,17 +16,13 @@
 	Expected java beans
 -----------------------------------------------------------------------------%>
 <jsp:useBean id="fragment" type="org.eclipse.birt.report.presentation.aggregation.IFragment" scope="request" />
- 
-<%-----------------------------------------------------------------------------
-	Report content fragment
------------------------------------------------------------------------------%>
 <TD ID='content' STYLE='width:100%;vertical-align:top'>
 	<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="height:100%; width:100%">
-	<%
-		if ( fragment != null )
-		{
-			fragment.callBack( request, response );
-		}
-	%>
+		<%
+			if ( fragment != null )
+			{
+				fragment.callBack( request, response );
+			}
+		%>
 	</TABLE>
 </TD>

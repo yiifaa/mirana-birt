@@ -99,9 +99,6 @@
 			$.noConflict();
 		</script>
 		<script type="text/javascript" src="<c:url value='statics/js/bootstrap.min.js'/>"></script>
-		<!-- 
-		<script type="text/javascript" src="<c:url value='/birt/ajax/ui/dialog/ReportParameterDialog.js'/>"></script>
-		 -->
 	</head>
 	
 	<body style='overflow:hidden; direction: ${attributeBean.isRtl()?"rtl":"ltr"}; scroll:no;padding-top:50px;'>
