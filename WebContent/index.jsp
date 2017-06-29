@@ -16,7 +16,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<a href="<%= request.getContextPath( ) + "/frameset?__report=test.rptdesign&sample=my+parameter"%>"> 报表样例</a>
+			<a href="<%= request.getContextPath( ) + "/frameset?__report=variables.rptdesign&sample=my+parameter"%>"> 报表样例</a>
 		</div>
 	</body>
 	<script type="text/javascript" src="statics/js/jquery-3.2.1.min.js"></script>
