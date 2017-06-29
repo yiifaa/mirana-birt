@@ -6,16 +6,16 @@
 <jsp:useBean id="attributeBean" type="org.eclipse.birt.report.context.BaseAttributeBean" scope="request" />
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	ScalarParameterBean parameterBean = (ScalarParameterBean) attributeBean.getParameterBean( );
-	String encodedParameterName = ParameterAccessor.htmlEncode( parameterBean.getName( ) );
+	ScalarParameterBean parameterBean = (ScalarParameterBean) attributeBean.getParameterBean();
+	String encodedParameterName = ParameterAccessor.htmlEncode( parameterBean.getName());
 %>
 <div class="form-group">
    	<label for="${encodedParameterName}" class="col-sm-4 control-label">
    		<%=parameterBean.getDisplayName() != null ? parameterBean.getDisplayName() : parameterBean.getToolTip() %>
    		
-   		<c:if test="${parameterBean.isRequired()}">
+   		<% if(parameterBean.isRequired()) {%>
    			<FONT COLOR="red">*</FONT>
-   		</c:if>
+   		<% }%>	
    	</label>
     <div class="col-sm-8">
     	<input type="hidden" id="control_type" value="text"/>
@@ -49,13 +49,12 @@
 			VALUE="<%= ParameterAccessor.htmlEncode((parameterBean.getDisplayText() == null )? "" : parameterBean.getDisplayText( ) ) %>"
 			>
 			
-		<c:if test="${!parameterBean.isRequired()}">
+		<% if(!parameterBean.isRequired()) {%>
 			<label class="radio-inline" for="<%= encodedParameterName + "_radio_null" %>">
 				<input name="<%=encodedParameterName + "_radio"%>" type="radio" id="<%= encodedParameterName + "_radio_null" %>" value="<%=encodedParameterName%>" ${empty parameterBean.getValue()?"checked" : ""}/>
 				设置为空
 			</label>
-		</c:if>
+		<% }%>
 		<input type="hidden" id="isRequired" value="<%=parameterBean.isRequired()? "true": "false"%>"/>
-		
     </div>
 </div>
