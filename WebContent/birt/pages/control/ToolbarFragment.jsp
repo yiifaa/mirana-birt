@@ -11,27 +11,27 @@
 <c:if test="${attributeBean.isShowToolbar()}">
 		<ul id="toolbar"  class="nav navbar-nav navbar-left">
 			<li>
-				<a href="#" id="toc" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.toc')}">
+				<a href="javascript:void(0);" id="toc" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.toc')}">
 					<i class="glyphicon glyphicon-th-list"></i>
 				</a>
 			</li>
 			<li>
-				<a href="#" id="parameter" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.parameter')}">
+				<a href="javascript:void(0);" id="parameter" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.parameter')}">
 					<i class="glyphicon glyphicon-glass"></i>
 				</a>
 			</li>
 			<li>
-				<a href="#" id="export" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.export')}">
+				<a href="javascript:void(0);" id="export" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.export')}">
 					<i class="glyphicon glyphicon-euro"></i>
 				</a>
 			</li>
 			<li>
-				<a href="#" id="exportReport" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.exportreport')}">
+				<a href="javascript:void(0);" id="exportReport" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.exportreport')}">
 					<i class="glyphicon glyphicon-floppy-save"></i>
 				</a>
 			</li>
 			<li>
-				<a href="#" id="print" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.print')}">
+				<a href="javascript:void(0);" id="print" title="${BirtResources.getHtmlMessage('birt.viewer.toolbar.print')}">
 					<i class="glyphicon glyphicon-print"></i>
 				</a>
 			</li>
@@ -55,22 +55,22 @@
 	    </div>
 		<ul class="nav navbar-nav navbar-right" id="navigationBar">
 	       	<li>
-	       		<a href="#" title="${BirtResources.getHtmlMessage('birt.viewer.navbar.first')}" id="first">
+	       		<a href="javascript:void(0);" title="${BirtResources.getHtmlMessage('birt.viewer.navbar.first')}" id="first">
 	       			<i class="glyphicon glyphicon-fast-backward"></i>
 	       		</a>
 	       	</li>
 	       	<li>
-	       		<a href="#" title="${BirtResources.getHtmlMessage('birt.viewer.navbar.previous')}" id="previous">
+	       		<a href="javascript:void(0);" title="${BirtResources.getHtmlMessage('birt.viewer.navbar.previous')}" id="previous">
 	       			<i class="glyphicon glyphicon-backward"></i>
 	       		</a>
 	       	</li>
 	       	<li>
-	       		<a href="#" title="${BirtResources.getHtmlMessage('birt.viewer.navbar.next')}" id="next">
+	       		<a href="javascript:void(0);" title="${BirtResources.getHtmlMessage('birt.viewer.navbar.next')}" id="next">
 	       			<i class="glyphicon glyphicon-forward"></i>
 	       		</a>
 	       	</li>
 	       	<li>
-	       		<a href="#" title="${BirtResources.getHtmlMessage('birt.viewer.navbar.last')}" id="last">
+	       		<a href="javascript:void(0);" title="${BirtResources.getHtmlMessage('birt.viewer.navbar.last')}" id="last">
 	       			<i class="glyphicon glyphicon-fast-forward"></i>
 	       		</a>
 	       	</li>

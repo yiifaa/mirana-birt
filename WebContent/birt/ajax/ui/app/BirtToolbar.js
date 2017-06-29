@@ -92,8 +92,13 @@ BirtToolbar.prototype = Object.extend( new AbstractBaseToolbar( ),
 					birtEventDispatcher.fireEvent( birtEvent.__E_QUERY_EXPORT );
 					break;
 				}
-				case 'toc':
-				{
+				case 'toc': {
+					var borderStyle = jQuery('#Document').css('border-left-style');
+					if(borderStyle === 'none') {
+						jQuery('#Document').css('border-left-style', 'solid')
+					} else {
+						jQuery('#Document').css('border-left-style', 'none')
+					}
 					birtEventDispatcher.broadcastEvent(birtEvent.__E_TOC );
 					break;
 				}

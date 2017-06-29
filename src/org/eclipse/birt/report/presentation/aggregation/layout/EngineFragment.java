@@ -1,14 +1,3 @@
-/*************************************************************************************
- * Copyright (c) 2004 Actuate Corporation and others.
- * All rights reserved. This program and the accompanying materials 
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *     Actuate Corporation - Initial implementation.
- ************************************************************************************/
-
 package org.eclipse.birt.report.presentation.aggregation.layout;
 
 import java.io.ByteArrayInputStream;
@@ -41,7 +30,6 @@ import org.eclipse.birt.report.service.actionhandler.BirtRenderReportActionHandl
 import org.eclipse.birt.report.service.actionhandler.BirtRunAndRenderActionHandler;
 import org.eclipse.birt.report.service.actionhandler.BirtRunReportActionHandler;
 import org.eclipse.birt.report.session.IViewingSession;
-import org.eclipse.birt.report.session.ViewingSessionManager;
 import org.eclipse.birt.report.session.ViewingSessionUtil;
 import org.eclipse.birt.report.soapengine.api.GetUpdatedObjectsResponse;
 import org.eclipse.birt.report.soapengine.api.Operation;
@@ -51,7 +39,7 @@ import org.eclipse.birt.report.utility.ParameterAccessor;
 /**
  * Fragment that handle PFE related tasks.
  * <p>
- * 
+ * 主要处理Download相关任务
  * @see FramesetFragment
  */
 public class EngineFragment extends BirtBaseFragment

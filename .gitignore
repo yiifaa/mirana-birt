@@ -3,3 +3,5 @@ nb-configuration.xml
 .settings/
 .classpath
 *.class
+build/
+bin/

@@ -29,6 +29,8 @@ import org.eclipse.birt.report.service.BirtReportServiceFactory;
 import org.eclipse.birt.report.service.BirtViewerReportService;
 import org.eclipse.birt.report.utility.BirtUtility;
 
+import com.mirana.report.ReportConstants;
+
 public class BirtEngineServlet extends BaseReportEngineServlet
 {
 
@@ -51,7 +53,7 @@ public class BirtEngineServlet extends BaseReportEngineServlet
 
 		requester = new RequesterFragment( );
 		requester.buildComposite( );
-		requester.setJSPRootPath( "/webcontent/birt" ); //$NON-NLS-1$
+		requester.setJSPRootPath(ReportConstants.JSP_ROOT);
 	}
 
 	/**
@@ -67,8 +69,7 @@ public class BirtEngineServlet extends BaseReportEngineServlet
 	protected IContext __getContext( HttpServletRequest request,
 			HttpServletResponse response ) throws BirtException
 	{
-		BirtReportServiceFactory.getReportService( ).setContext(
-				getServletContext( ), null );
+		BirtReportServiceFactory.getReportService( ).setContext(getServletContext( ), null );
 		return new BirtContext( request, response );
 	}
 

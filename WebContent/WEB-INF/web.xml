@@ -18,10 +18,11 @@
 		<param-value></param-value>
 	</context-param>
 
-	<!-- 报表引擎地址，可为空  -->
+	<!-- rptdesign文件的存放地址  -->
 	<context-param>
 		<param-name>BIRT_VIEWER_WORKING_FOLDER</param-name>
-		<param-value></param-value>
+		<!-- 无论有无反斜杠，都会添加上/路径 -->
+		<param-value>WEB-INF/design</param-value>
 	</context-param>
 
 	<!-- 编译后document存放地址	-->
@@ -84,7 +85,7 @@
 	<!-- Resource location directory. Defaults to ${birt home} -->
 	<context-param>
 		<param-name>BIRT_RESOURCE_PATH</param-name>
-		<param-value></param-value>
+		<param-value>WEB-INF/i18n</param-value>
 	</context-param>
 
 	<!-- Preview report rows limit. An empty value means no limit. -->

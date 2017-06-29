@@ -63,6 +63,7 @@ public class FramesetFragment extends BirtBaseFragment {
 	 */
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, BirtException {
+		//	谁放进来的？
 		BaseAttributeBean attrBean = (BaseAttributeBean) request.getAttribute(IBirtConstants.ATTRIBUTE_BEAN);
 		if (attrBean != null && !attrBean.isShowParameterPage() && !this.__checkHTMLFormat(request)) {
 			this.doPreService(request, response);

@@ -379,6 +379,7 @@ public class ParameterAccessor
 	 * Context parameter name that gives the working folder of the local BIRT
 	 * viewer user.
 	 */
+	/* 默认的报表文档存放路径 rptdesign*/
 	public static final String INIT_PARAM_WORKING_DIR = "BIRT_VIEWER_WORKING_FOLDER"; //$NON-NLS-1$
 
 	/**
@@ -1065,7 +1066,7 @@ public class ParameterAccessor
 			filePath = DataUtil.trimString( getParameter( request, PARAM_REPORT ) );
 		}
 		filePath = decodeFilePath( request, filePath );
-
+		//	只是抽取了参数名称，如variables.rptdesign
 		return getRealPathOnWorkingFolder( filePath, request );
 	}
 
@@ -1516,8 +1517,8 @@ public class ParameterAccessor
 		String workingPath = "${" + IBirtConstants.SYS_PROP_WORKING_PATH + "}/"; //$NON-NLS-1$//$NON-NLS-2$
 
 		// Working folder setting
-		workingFolder = processWorkingFolder( context,
-				context.getInitParameter( INIT_PARAM_WORKING_DIR ) );
+		//	设置文件存放地址
+		workingFolder = processWorkingFolder(context, context.getInitParameter( INIT_PARAM_WORKING_DIR ) );
 
 		// Document folder setting
 		String initDocumentFolder = context.getInitParameter( INIT_PARAM_DOCUMENT_FOLDER );
@@ -2760,11 +2761,9 @@ public class ParameterAccessor
 	 * @param path
 	 * @return
 	 */
-	public static String processWorkingFolder( ServletContext context,
-			String path )
-	{
+	public static String processWorkingFolder( ServletContext context, String path) {
 		path = convertSystemPath( DataUtil.trimString( path ) );
-		String realPath = null;
+		String realPath = null; 
 
 		if ( isRelativePath( path ) )
 		{

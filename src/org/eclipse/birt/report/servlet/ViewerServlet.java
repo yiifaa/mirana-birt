@@ -115,12 +115,12 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet {
 		 */
 		viewer = new FramesetFragment();
 		viewer.buildComposite();
-		viewer.setJSPRootPath(ReportConstants.JSP_ROOT); //$NON-NLS-1$
+		viewer.setJSPRootPath(ReportConstants.JSP_ROOT); 
 
 		// 处理 'run' 模式
 		run = new RunFragment();
 		run.buildComposite();
-		run.setJSPRootPath(ReportConstants.JSP_ROOT); //$NON-NLS-1$
+		run.setJSPRootPath(ReportConstants.JSP_ROOT);
 	}
 
 	/**
@@ -159,8 +159,9 @@ public class ViewerServlet extends BirtSoapMessageDispatcherServlet {
 			activeFragment = run;
 		}
 
-		if (activeFragment != null)
+		if (activeFragment != null) {
 			activeFragment.service(context.getRequest(), context.getResponse());
+		}			
 	}
 
 	/**

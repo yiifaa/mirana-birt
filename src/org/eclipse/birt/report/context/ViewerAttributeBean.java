@@ -1,14 +1,3 @@
-/*************************************************************************************
- * Copyright (c) 2004 Actuate Corporation and others.
- * All rights reserved. This program and the accompanying materials 
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *     Actuate Corporation - Initial implementation.
- ************************************************************************************/
-
 package org.eclipse.birt.report.context;
 
 import java.io.File;
@@ -54,6 +43,7 @@ import org.eclipse.birt.report.utility.ParameterAccessor;
 import com.ibm.icu.util.ULocale;
 
 /**
+ * 存储Request请求的数据对象
  * Data bean for viewing request. Birt viewer distributes process logic into
  * viewer fragments. Each fragment seperates its front-end and back-end process
  * into jsp page and "code behand" fragment class. Viewer attribute bean serves
@@ -176,7 +166,8 @@ public class ViewerAttributeBean extends BaseAttributeBean
 					null,
 					false );
 		}
-
+		
+		//	获取报表文件名
 		this.reportDesignName = ParameterAccessor.getReport( request, null );
 
 		this.emitterId = ParameterAccessor.getEmitterId( request );
