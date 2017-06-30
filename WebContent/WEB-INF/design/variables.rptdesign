@@ -24,8 +24,8 @@
     <property name="imageDPI">96</property>
     <parameters>
         <scalar-parameter name="RP_PK" id="5">
-            <text-property name="helpText">主键范围</text-property>
-            <text-property name="promptText">主键范围</text-property>
+            <text-property name="helpText">IP地址</text-property>
+            <text-property name="promptText">IP地址</text-property>
             <property name="valueType">static</property>
             <property name="isRequired">true</property>
             <property name="dataType">string</property>

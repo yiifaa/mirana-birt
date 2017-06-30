@@ -113,7 +113,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="<c:url value='/'/>">报表预览</a>
+					<a class="navbar-brand" href="<c:url value='/mirana'/>">中测安华</a>
 				</div>
 				<%
 					if (fragment != null) {
