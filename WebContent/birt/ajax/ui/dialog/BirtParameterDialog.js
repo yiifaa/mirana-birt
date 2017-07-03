@@ -487,7 +487,17 @@ BirtParameterDialog.prototype = Object.extend(new AbstractParameterDialog(),
 						//	alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
 						alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, title));
 						return false;							
-					}	
+					}
+					
+					/**
+					if(birtUtility.trim(paramValue) === '*') {
+						paramValue = '';
+					}
+					
+					if(birtUtility.trim(fieldValue) === '*') {
+						fieldValue = '';
+					}
+					**/
 												
 					// set parameter value
 					if(!this.__parameter[k])
