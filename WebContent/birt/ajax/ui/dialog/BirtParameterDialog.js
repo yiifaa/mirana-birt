@@ -380,16 +380,16 @@ BirtParameterDialog.prototype = Object.extend(new AbstractParameterDialog(),
 			if(oType == 'text')
 			{
 				// data type of current parameter
-				var dataType = oIEC[1].value;
+				var dataType = oIEC[1].value,
+					title = oIEC[2].title || oIEC[2].name;
 				
 				// allow null
-				if(oIEC[2] && oIEC[2].type == 'radio')
-				{
+				if(oIEC[2] && oIEC[2].type == 'radio') {
 					if(oIEC[2].checked)
 					{
 						var paramName = oIEC[3].name;
 						var paramValue = oIEC[4].value;
-						var displayText = oIEC[5].value;
+						var displayText = title || oIEC[5].value;
 
 						if(displayText != oIEC[3].value)
 						{
@@ -403,9 +403,7 @@ BirtParameterDialog.prototype = Object.extend(new AbstractParameterDialog(),
 						}
 																		
 						// check if required
-						if(this.__is_parameter_required(oIEC) 
-							&& birtUtility.trim(paramValue) == '' && this.visible)
-						{
+						if(this.__is_parameter_required(oIEC)  && birtUtility.trim(paramValue) == '' && this.visible) {
 							oIEC[3].focus();
 							alert(birtUtility.formatMessage(Constants.error.parameterRequired, paramName));
 							return false;
@@ -476,7 +474,8 @@ BirtParameterDialog.prototype = Object.extend(new AbstractParameterDialog(),
 						&& birtUtility.trim(paramValue) == '' && this.visible)
 					{
 						oIEC[2].focus();
-						alert(birtUtility.formatMessage(Constants.error.parameterRequired, paramName));
+						//	alert(birtUtility.formatMessage(Constants.error.parameterRequired, paramName));
+						alert(birtUtility.formatMessage(Constants.error.parameterRequired, title));
 						return false;
 					}
 
@@ -485,7 +484,8 @@ BirtParameterDialog.prototype = Object.extend(new AbstractParameterDialog(),
 						&& birtUtility.trim(paramValue) == '' && this.visible)
 					{
 						oIEC[2].focus();
-						alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
+						//	alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, paramName));
+						alert(birtUtility.formatMessage(Constants.error.parameterNotAllowBlank, title));
 						return false;							
 					}	
 												
